@@ -1,0 +1,18 @@
+.sidenav {
+    height: 100%;
+    width: 10%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(20deg, #dd4b88, #190657);
+    padding-top: 10px;
+    float: left;
+  }
+  .main {
+    margin-left: 10%;
+    margin-top: 10%;
+    padding: 0px 10px;
+  }
+  
+  
