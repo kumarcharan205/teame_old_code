@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Users from './Users';
+import './style.css'
 import { useLocation } from 'react-router-dom';
-function UserForm() {
+import Navbar from '../admin_component/navbar';
 
-    const location=useLocation()
-    const user=location.state
+
+function UserForm() {
+    const location = useLocation()
+    const user = location.state
     console.log(user)
     const [userdata, setUserdata] = useState([]);
     const getUserdata = async () => {
@@ -22,58 +25,43 @@ function UserForm() {
         getUserdata();
     }, []);
 
-    
+
     return (
         <div>
             <div class="for w-100">
                 <div class="container-fluid">
-                    <div class="row flex-nowrap">
-                        <div class=" col-auto col-md-3 col-xl-2 px-sm-2 px-0" style={{ background: 'linear-gradient(#19105b, #472067, #7c3375, #FF6196)' , width:"10%" }}>
-                            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                                    <li class="nav-item text-white">
-                                        <a class="nav-link align-middle px-0">
-                                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">Hello User</span>
-                                        </a>
-
-                                    </li>
-                                </ul>
-                                <hr />
-                            </div>
+                    <Navbar />
+                    <React.Fragment>
+                        <div class="form-group pull-right">
+                            <input id='search' type="text" class="search form-control" placeholder="What you looking for?"></input>
                         </div>
-                        <React.Fragment>
-                            <div class=" p-3 overflow-auto" style={{ height: '100vh' }}>
-                                <div className="App">
-                                    <div className='container'>
-                                        <div className='row'>
-                                            <div className='col-md-8'>
-                                            <table className='table' style={{ marginTop: '10%'}}>
-                                                    <thead className="table bg-primary bg-midnight-blue" >
-                                                        <tr >
-                                                            <th>Sno</th>
-                                                            <th>Domain Name</th>
-                                                            <th>Training Name</th>
-                                                            <th>Start Date</th>
-                                                            <th>End Date</th>
-                                                            <th>Available Seats</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <Users usersData={userdata} />
-                                                    </tbody>
-
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div></div>
-                        </React.Fragment>
-
-                    </div>
+                        <span class="counter pull-right"></span>
+                        <table class="table table-hover table-bordered results" id="allTrainings">
+                            <thead>
+                                <tr>
+                                    {/* <th>S.No</th> */}
+                                    <th >Domain Name</th>
+                                    <th >Training Name</th>
+                                    <th >Start Date </th>
+                                    <th >Start Time</th>
+                                    <th >End Date</th>
+                                    <th >End Time</th>
+                                    <th >Domain Name</th>
+                                    <th >Available Seats</th>
+                                    <th ></th>
+                                </tr>
+                                <tr className="warning no-result">
+                                    <td colspan="4"><i className="fa fa-warning"></i> No result</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <Users usersData={userdata} />
+                            </tbody>
+                        </table>
+                    </React.Fragment >
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

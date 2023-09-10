@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import './training.css';
+//import './training.css';
 
 function Training(props) {
     const [tableData, setTableData] = useState([]);
@@ -73,7 +73,9 @@ function Training(props) {
                             <th scope="col">Trainer</th>
                             <th scope="col">Domain</th>
                             <th scope="col">Start Date</th>
+                            <th scope="col">Start Time</th>
                             <th scope="col">End Date</th>
+                            <th scope="col">End Time</th>
                             <th scope="col">RegisteredUsers</th>
                             <th scope="col">VacanciesLeft</th>
                             <th scope="col"> </th>
@@ -117,7 +119,7 @@ export default function View_training() {
     return (
         <>
             <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                Upcomimg Training
+                Upcomimg Training <i class="fa-solid fa-forward"></i>
             </Button>
             <Training
                 show={modalShow}

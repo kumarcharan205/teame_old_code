@@ -50,19 +50,12 @@ export default function Users() {
 
     return (
         <React.Fragment>
-            <input
-                type="text"
-                placeholder="Search by domain name..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                style={{ position: 'absolute', top: '50px',width:'20%' }}
-            />
 
             <>
                 {
                     filteredUsersData.map((uData, index) => (
                         <tr key={uData.id}>
-                            <td>{uData.id} </td>
+                            {/* <td>{uData.id} </td> */}
                             <td>{uData.domainname}</td>
                             <td>{uData.trainingname} </td>
                             <td>{uData.startdate} </td>

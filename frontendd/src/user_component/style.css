@@ -1,3 +1,66 @@
 body{
     overflow: hidden;
 }
+
+#search{
+    width: 20%;
+    margin-left: 75%;
+    margin-top: 5%;
+}
+
+#allTrainings{
+    margin-left: 15%;
+    width: 80%;
+    text-align: right;
+
+}
+
+
+/* table */
+body{
+    padding:20px 20px;
+  }
+  
+  .results tr[visible='false'],
+  .no-result{
+    display:none;
+  }
+  
+  .results tr[visible='true']{
+    display:table-row;
+  }
+  
+  .counter{
+    padding:8px; 
+    color:#ccc;
+  }
+
+/* complaint button  */
+.complaint{
+    background: none !important;
+}
+
+.row {
+    margin-bottom: 20px;
+}
+
+.column {
+    display: inline-block;
+    width: 48%; 
+}
+
+.complaintname, .complaintemail{
+    width: 90% !important;
+    height: 30px;
+}
+.complaintname{
+    margin-right: 5px;
+}
+.complaintmessage{
+    border-radius: none  !important;
+}
+@media (max-width: 768px) {
+    .column {
+        width: 100%;
+    }
+}

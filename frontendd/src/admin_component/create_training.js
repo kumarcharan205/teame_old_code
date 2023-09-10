@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import './train.css'
+import './style.scss'
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,6 +10,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import View_training from './view_trainings';
+import Archieve from './archieve';
+import Navbar from './navbar';
 // import Swal from 'sweetalert2';
 
 
@@ -26,8 +28,8 @@ function MyFormModal(props) {
     });
 
     const handleSubmit = async (e) => {
-        console.log("abcd check",startDate,endDate)
-        console.log("working",training);
+        console.log("abcd check", startDate, endDate)
+        console.log("working", training);
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5001/api/data', training, {
@@ -79,6 +81,7 @@ function MyFormModal(props) {
                                                 placeholder="Training Name"
                                                 value={training.training_name}
                                                 onChange={(e) => setTraining({ ...training, training_name: e.target.value })}
+                                                required
                                             />
                                         </div>
                                         <div className="form-group">
@@ -89,6 +92,7 @@ function MyFormModal(props) {
                                                 placeholder="Trainer"
                                                 value={training.trainer}
                                                 onChange={(e) => setTraining({ ...training, trainer: e.target.value })}
+                                                required
                                             />
                                         </div>
                                         <div className="form-group">
@@ -99,6 +103,7 @@ function MyFormModal(props) {
                                                 placeholder="Title"
                                                 value={training.skill}
                                                 onChange={(e) => setTraining({ ...training, skill: e.target.value })}
+                                                required
                                             />
                                         </div>
                                         <div className="form-group">
@@ -108,6 +113,7 @@ function MyFormModal(props) {
                                                 placeholder="Leave a comment here"
                                                 lue={training.description}
                                                 onChange={(e) => setTraining({ ...training, description: e.target.value })}
+                                                
                                             ></textarea>
                                         </div>
                                         <div className="form-group">
@@ -116,6 +122,7 @@ function MyFormModal(props) {
                                                 id="domain"
                                                 value={training.domain}
                                                 onChange={(e) => setTraining({ ...training, domain: e.target.value })}
+                                                required
                                             >
                                                 <option value="Full Stack">Full Stack</option>
                                                 <option value="Data">Data</option>
@@ -128,28 +135,29 @@ function MyFormModal(props) {
                                                 selected={startDate}
                                                 onChange={(date) => {
                                                     setStartDate(date);
-                                                    setTraining({ ...training, startDate: date }); 
+                                                    setTraining({ ...training, startDate: date });
                                                 }}
                                                 dateFormat="Pp"
                                                 showTimeSelect
                                                 timeFormat="p"
                                                 minDate={new Date()}
+                                                required
                                             />
-                                        
+
                                         </div>
                                         <div className="form-group">
                                             <label for="endDate">End Date</label>
                                             <DatePicker
                                                 selected={endDate}
-                                                onChange={(date) => 
-                                                    {
-                                                        setEndDate(date);
-                                                        setTraining({ ...training, endDate: date }); 
-                                                    }}
+                                                onChange={(date) => {
+                                                    setEndDate(date);
+                                                    setTraining({ ...training, endDate: date });
+                                                }}
                                                 dateFormat="Pp"
                                                 showTimeSelect
                                                 timeFormat="p"
                                                 minDate={new Date()}
+                                                required
                                             />
                                             {/* <input
                                                 type="date"
@@ -169,6 +177,7 @@ function MyFormModal(props) {
                                                 max="99"
                                                 value={training.seats}
                                                 onChange={(e) => setTraining({ ...training, seats: e.target.value })}
+                                                required
                                             />
                                         </div>
                                         <Button type="submit" className="button_" name="Submit">
@@ -183,7 +192,7 @@ function MyFormModal(props) {
                             </div>
                         </div>
                     </div>
-                    
+
 
 
 
@@ -206,19 +215,64 @@ export default function Admin_training() {
     return (
         <>
             <div className='maincontent'>
-                <h1>Welcome</h1>
-                <hr></hr>
-                <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                    Schedule Training
-                </Button>
+                <div className="container mt-5">
+                    <Navbar/>
+                    <div className="row">
 
+                        {/* Main Content */}
+                        <div className="col-lg-9">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-lg-4">
+                                        <div className="card">
+                                            <div className="card-header">
+                                                <h3>New Training</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <p className='card-text'>"Effortlessly create and customize training sessions for your team's growth and development needs"</p>
+                                                <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
+                                                    Schedule Now  <i className="fa-regular fa-calendar"></i>
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4">
+                                        <div className="card">
+                                            <div className="card-header">
+                                                <h3> Trainings</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <p className='card-text'>"Easily view and manage scheduled training sessions to keep your team's learning on track."</p>
+
+                                                <View_training />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-lg-4">
+                                        <div className="card">
+                                            <div className="card-header">
+                                                <h3>History</h3>
+                                            </div>
+                                            <div className="card-body">
+                                                <p className='card-text'>"Access deleted training records and perform resets as needed for seamless course management."</p>
+
+                                                <Archieve />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <MyFormModal
                     show={modalShow}
                     onHide={() => setModalShow(false)}
                 />
-                <View_training />
             </div>
+
         </>
     )
 }

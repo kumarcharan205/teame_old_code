@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
-import './register.css';
+import './register.scss';
 
 import { ToastContainer, toast } from 'react-toastify';
 
