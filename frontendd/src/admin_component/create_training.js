@@ -1,7 +1,4 @@
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+
 import './style.scss'
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -12,6 +9,8 @@ import axios from 'axios';
 import View_training from './view_trainings';
 import Archieve from './archieve';
 import Navbar from './navbar';
+import { ToastContainer, toast } from 'react-toastify';
+import { Navigate, useNavigate } from 'react-router-dom';
 // import Swal from 'sweetalert2';
 
 
@@ -26,26 +25,31 @@ function MyFormModal(props) {
         domain: 'Full Stack', // Default domain value
         seats: 1, // Default seats value
     });
+    const navigate=useNavigate()
 
     const handleSubmit = async (e) => {
         console.log("abcd check", startDate, endDate)
         console.log("working", training);
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5001/api/data', training, {
+            console.log(training)
+            const response = await axios.post('http://localhost:5000/users/admin', training, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
             if (response.status === 200) {
-                console.log('Scheduled training:', response.data);
-                // Swal.fire('Training Created Successfully');
+                toast.success('Training created successfully')
+                setTimeout(() => {
+                    navigate('/')
+                  }, 3000)
+                
             } else {
-                console.error('Set training failed');
+                toast.error('Set training failed');
             }
         } catch (error) {
-            console.error('Registering error:', error);
+            console.log('Registering error:', error);
         }
     };
 
@@ -59,6 +63,7 @@ function MyFormModal(props) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
+                <ToastContainer></ToastContainer>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Training Schedule
@@ -111,7 +116,7 @@ function MyFormModal(props) {
                                             <textarea
                                                 id="description"
                                                 placeholder="Leave a comment here"
-                                                lue={training.description}
+                                                value={training.description}
                                                 onChange={(e) => setTraining({ ...training, description: e.target.value })}
                                                 
                                             ></textarea>

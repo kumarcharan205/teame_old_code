@@ -1,66 +1,36 @@
-body{
-    overflow: hidden;
-}
-
-#search{
-    width: 20%;
-    margin-left: 75%;
-    margin-top: 5%;
-}
-
-#allTrainings{
-    margin-left: 15%;
-    width: 80%;
-    text-align: right;
-
-}
-
-
-/* table */
-body{
-    padding:20px 20px;
-  }
-  
-  .results tr[visible='false'],
-  .no-result{
-    display:none;
-  }
-  
-  .results tr[visible='true']{
-    display:table-row;
-  }
-  
-  .counter{
-    padding:8px; 
-    color:#ccc;
+.button {
+    text-decoration: none;
+    color: white; 
+    text-align: center;
   }
 
-/* complaint button  */
-.complaint{
-    background: none !important;
+  .button:hover{
+    color:white;   
+  }
+
+
+  /* Add this to your CSS file or style.css */
+.sidebar {
+  width: 250px; /* Adjust the width as needed */
+  height: 100%;
+  background: linear-gradient(#19105b, #472067, #7c3375, #FF6196);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
-.row {
-    margin-bottom: 20px;
+.main-content {
+  /* margin-left: 25px; Should match the width of the sidebar */
+  /* padding: 15px; Add some padding to prevent content from being too close to the edge */
+  overflow-y: auto; /* Allow the main content to scroll if it overflows */
+  margin-left: 2%;
 }
 
-.column {
-    display: inline-block;
-    width: 48%; 
-}
-
-.complaintname, .complaintemail{
-    width: 90% !important;
-    height: 30px;
-}
-.complaintname{
-    margin-right: 5px;
-}
-.complaintmessage{
-    border-radius: none  !important;
-}
 @media (max-width: 768px) {
-    .column {
-        width: 100%;
-    }
+  .custom-container {
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+  }
 }
+
+

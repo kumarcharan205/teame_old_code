@@ -51,6 +51,9 @@ function Signup() {
 
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
 
+  const isValid = /@jmangroup\.com$/
+
+      
 
 
   const validationReg = async (e) => {
@@ -71,11 +74,7 @@ function Signup() {
 
       toast.error('Please fill in all fields.');
 
-      
-
     }
-
-
 
     else if (!passwordRegex.test(password)) {
 
@@ -86,7 +85,6 @@ function Signup() {
       formRef.current.reset()
 
     }
-
     else if (password !== repassword) {
 
       toast.error("Password doesn't match")
@@ -94,13 +92,18 @@ function Signup() {
       formRef.current.reset()
 
     }
+    else if(!isValid.test(email)){
+      toast.error("Enter the organisation mail")
+      formRef.current.reset()
+    }
 
     else {
+      
 
       try {
-        const response = await axios.post('http://localhost:3001/api/register', data);
-        console.log(response.data.message)
-        if (response.data.message==="User registered successfully.")
+        const response = await axios.post('http://localhost:5000/users/signin', data);
+        console.log(response.data)
+        if (response.data.message==="response success")
         {
           toast.success("User created successfully")
           setTimeout(()=>{
@@ -113,9 +116,20 @@ function Signup() {
           formRef.current.reset()
 
         }
-        else if (response.data.message==="Failed to register user.")
+        else if (response.data.message==="username or mail id already exists")
         {
           toast.error("Failed to register")
+          formRef.current.reset()
+        }
+        else if(response.data==='not an organisation mail')
+        {
+          toast.error("Enter the organisation mail")
+          formRef.current.reset()
+        }
+        else if(response.data==='Passoword is weak')
+        {
+          toast.error("Password must contain atleast 1 uppercase,1 special character,1 numeric character and min 8 characters")
+          formRef.current.reset()
         }
       } catch (error) {
         console.log("error i got backend",error);
@@ -123,22 +137,6 @@ function Signup() {
         formRef.current.reset()
       }
 
-      //   const response = await axios.post('http://localhost:3001/api/register', data);
-
-
-      //   console.log(response.data.message);
-      //   toast.success("Account Created Successfully")
-      //   setTimeout(()=>{
-          
-      //     navigate('/')
-      //   },3000)
-        
-
-      // } catch (error) {
-      //   console.log("error i got",error.message)
-      //   // console.error(error);
-
-      // }
 
     }
 
@@ -182,7 +180,7 @@ function Signup() {
 
             <i className="fa-regular fa-envelope"></i>
 
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+            <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
 
           </div>
 
