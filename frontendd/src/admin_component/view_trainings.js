@@ -119,7 +119,7 @@ export default function View_training() {
     return (
         <>
             <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                Upcomimg Training <i class="fa-solid fa-forward"></i>
+                Upcomimg  <i class="fa-solid fa-forward"></i>
             </Button>
             <Training
                 show={modalShow}
