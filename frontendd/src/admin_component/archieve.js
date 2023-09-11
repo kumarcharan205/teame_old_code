@@ -64,7 +64,7 @@ function Training(props) {
             <Modal.Body>
             {/* <div id="mySidenav" className="sidenav">
             </div> */}
-            <div className="main-user">
+            <div className="table-responsive table-responsive-sm">
                 <table className="table table-bordered">
                     <thead>
                     <tr>

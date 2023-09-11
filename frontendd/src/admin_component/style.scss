@@ -56,6 +56,23 @@ li {
   align-items: center;
   justify-content: space-between;
 }
+
+/* sidenavbar for mobile */
+@media (max-width: 767px) {
+  .sidebar {
+    flex-direction: row;
+    height: 7vh;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Style for the text elements inside the horizontal sidebar */
+.sidebar h2 {
+    margin: 0; /* Remove default margin */
+}
+}
 .welcomeAdmin {
   color: white;
   font-size: 20px;
@@ -86,11 +103,12 @@ li {
 
 .logOut {
   background: none !important;
+  padding-bottom: 10px;
 }
 
-.logout {
-  padding-left: 50px !important;
-}
+// .logout {
+//   padding-left: 50px !important;
+// }
 
 /* maincontent */
 @media (min-width: 768px) {
@@ -110,6 +128,8 @@ li {
     margin: 10% 0 0 10%;
   }
 }
+
+
 
 /* buttons */
 button {

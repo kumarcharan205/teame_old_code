@@ -2,15 +2,12 @@ body{
     overflow: hidden;
 }
 
-
-
 #allTrainings{
     margin-left: 15%;
     width: 80%;
     text-align: right;
 
 }
-
 
 /* table */
 body{
@@ -97,3 +94,4 @@ th{
 .accordion-button{
     color: white !important;
 }
+

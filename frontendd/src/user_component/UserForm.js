@@ -46,7 +46,7 @@ function UserForm() {
                                             <input id='search' type="text" className="search form-control" placeholder=" &#x1F50D; Search Trainings"></input>
                                         </div>
                                         {/* <span className="counter pull-right"></span> */}
-
+                                        <div className="table-responsive table-responsive-sm">
                                         <table className="table table-hover table-bordered results" id="allTrainings">
                                             <thead>
                                                 <tr>
@@ -70,6 +70,7 @@ function UserForm() {
                                                 <Users usersData={userdata} />
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
