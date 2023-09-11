@@ -1,18 +1,16 @@
 .login-container {
-    display: flex;
-    justify-content: space-between;
-    margin: 9% 15% 0;
-    max-height: 50%;
+  display: flex;
+  max-height: 100%;
   }
   
   .login-left {
     flex: 1;
-    
+    height: 100vh;
   }
 
   h1{
     color: rgb(25,16,91);
-    margin-bottom: 10%;
+    margin-bottom: 20%;
   }
   .h1{
     margin-left: 15%;
@@ -105,5 +103,81 @@
   
  .buttons{
   margin-left: 15%;
+ }
+ @media screen and (max-width: 400px){
+  .login-left{
+    height: 90vh;
+  }
+  .pngimg {
+    position: absolute;
+    z-index: 999;
+    left: 32%;
+    top: 3%;
+    height: 9%;
+    width: 36%;
+  }
+  
+  .olduserbutton{
+    font-size: 100px;
+    position: initial;
+  }
+  .buttons{
+    font-size: 15px;
+    padding: 5px 5px;
+  }
+  .login-input-container i {
+    position: absolute;
+    left: 23px;
+    top: 22%;
+    transform: translateY(-44%);
+    color: #ccc;
+    font-size: 14px;
+  }
+  .login-input-container input {
+    padding-left: 17px;
+    font-size: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 70%;
+    outline: none;
+    margin-bottom: 10%;
+  }
+  .login-right form input{
+    font-size: 12px;
+  }
+  .signup-right h1 {
+    font-size: 18px;
+  }
+  .login-right {
+    margin-top: 30%;
+    margin-left: -100%;
+    padding: 0px;
+    background-color: white;
+  }
+  .login-left{
+    padding: 0px;
+  }
+  .login-right form {
+    background-color: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+    .heading{
+      color: black;
+      font-size: large;
+    }
+    .loginbutton{
+      padding: 2px 2px ;
+      font-size: 13px;
+    }
+    .oldloginbutton{
+      font-size: 13px;
+      padding: 2px 2px ;
+      border: none;
+    }
+
  }
   
