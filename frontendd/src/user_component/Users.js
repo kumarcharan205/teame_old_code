@@ -56,10 +56,13 @@ export default function Users() {
                     filteredUsersData.map((uData, index) => (
                         <tr key={uData.id}>
                             {/* <td>{uData.id} </td> */}
-                            <td>{uData.domainname}</td>
+                            
                             <td>{uData.trainingname} </td>
+                            <td>{uData.domainname}</td>
                             <td>{uData.startdate} </td>
+                            <td>{uData.starttime} </td>
                             <td>{uData.enddate} </td>
+                            <td>{uData.endtime} </td>
                             <td>{uData.availableseats} </td>
                             <td className="btn-btn">
                                 <button

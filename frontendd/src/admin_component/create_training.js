@@ -11,7 +11,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import View_training from './view_trainings';
 import Archieve from './archieve';
-import Navbar from './navbar';
+import Navbar from './adminnavbar';
 // import Swal from 'sweetalert2';
 
 
@@ -231,7 +231,7 @@ export default function Admin_training() {
                                             <div className="card-body">
                                                 <p className='card-text'>"Effortlessly create and customize training sessions for your team's growth and development needs"</p>
                                                 <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                                                    Schedule Now  <i className="fa-regular fa-calendar"></i>
+                                                    Schedule  <i className="fa-regular fa-calendar"></i>
                                                 </Button>
                                             </div>
                                         </div>
@@ -239,7 +239,7 @@ export default function Admin_training() {
                                     <div className="col-lg-4">
                                         <div className="card">
                                             <div className="card-header">
-                                                <h3> Trainings</h3>
+                                                <h3>Trainings</h3>
                                             </div>
                                             <div className="card-body">
                                                 <p className='card-text'>"Easily view and manage scheduled training sessions to keep your team's learning on track."</p>
@@ -252,7 +252,7 @@ export default function Admin_training() {
                                     <div className="col-lg-4">
                                         <div className="card">
                                             <div className="card-header">
-                                                <h3>History</h3>
+                                                <h3> History</h3>
                                             </div>
                                             <div className="card-body">
                                                 <p className='card-text'>"Access deleted training records and perform resets as needed for seamless course management."</p>
