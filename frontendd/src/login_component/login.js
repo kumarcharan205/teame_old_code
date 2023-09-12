@@ -67,7 +67,7 @@ function Login() {
       </div>
       <div className="login-right">
         <h1 className="h1">Welcome Back :)</h1>
-        <form onSubmit={validationReg} ref={formref}>
+        <form onSubmit={validationReg}>
           <div className="login-input-container">
             <i className="fa-regular fa-envelope"></i>
             <input
