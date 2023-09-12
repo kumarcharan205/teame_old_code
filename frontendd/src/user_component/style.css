@@ -95,3 +95,32 @@ th{
     color: white !important;
 }
 
+@media (max-width: 767px) {
+    .accordion {
+        max-width: 100%;
+        margin-left: 0; /* Remove left margin */
+        margin-top: 15%;
+        padding:0; /* Remove top margin */
+    }
+    body{
+        padding:0px;
+    }
+    .container-fluid{
+        margin-left: 0;
+        margin-right: 0;
+        padding-right: 0;
+        padding-left: 0;
+
+    }
+}
+
+@media (max-width: 300px) {
+    .accordion {
+        margin-top: 20%;
+    }}
+
+@media(min-width: 360px) and (max-width: 415px){
+    .accordion{
+        margin-top: 17%;
+    }
+}

@@ -64,13 +64,14 @@ li {
     height: 7vh;
     width: 100%;
     padding: 10px;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
 /* Style for the text elements inside the horizontal sidebar */
-.sidebar h2 {
+.sidebar p {
     margin: 0; /* Remove default margin */
+
 }
 }
 .welcomeAdmin {

@@ -86,7 +86,7 @@ function UserForm() {
 
                                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div className="accordion-body">
-
+                                    <div className="table-responsive table-responsive-sm">
                                         <table className="table table-hover table-bordered results" id="allTrainings">
                                             <thead>
                                                 <tr>
@@ -110,6 +110,7 @@ function UserForm() {
                                                 <Users usersData={userdata} />
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

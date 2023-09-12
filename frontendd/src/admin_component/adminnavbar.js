@@ -6,7 +6,7 @@ function Adminnavbar() {
     return (
         <>
             <div className="sidebar">
-                <h2 className='welcomeAdmin'> Welcome <br></br>User</h2>
+                <h4 className='welcomeAdmin'> Welcome <br></br><strong>User</strong></h4>
                 {/* <Complaint /> */}
                 <div className="logout-btn-div">
                     <Link to='/'>  <button className='logOut'>Logout <i class="logout fa-solid fa-arrow-right-from-bracket"></i></button></Link>
