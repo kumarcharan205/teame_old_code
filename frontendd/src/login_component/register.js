@@ -24,7 +24,16 @@ function Signup() {
     }, 3000);
     return () => clearInterval(interval); // Clear the interval on unmount
   }, []);
+<<<<<<< HEAD
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+=======
+
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+
+  const isValid = /@jmangroup\.com$/
+
+      
+>>>>>>> 3eaafe82493eee69066adaef50f81e8b8c2609b6
   const validationReg = async (e) => {
     e.preventDefault()
     const data = {
@@ -34,7 +43,13 @@ function Signup() {
     };
     if (name.trim() === '' || email.trim() === '' || password.trim() === '') {
       toast.error('Please fill in all fields.');
+<<<<<<< HEAD
     }
+=======
+
+    }
+
+>>>>>>> 3eaafe82493eee69066adaef50f81e8b8c2609b6
     else if (!passwordRegex.test(password)) {
       // Password doesn't meet the criteria
       toast.error("Password must contain at least 1 capital letter, 1 special character, and be at least 8 characters long.");
@@ -44,11 +59,27 @@ function Signup() {
       toast.error("Password doesn't match")
       formRef.current.reset()
     }
+<<<<<<< HEAD
     else {
       try {
         const response = await axios.post('http://localhost:3001/api/register', data);
         console.log(response.data.message)
         if (response.data.message === "User registered successfully.") {
+=======
+    else if(!isValid.test(email)){
+      toast.error("Enter the organisation mail")
+      formRef.current.reset()
+    }
+
+    else {
+      
+
+      try {
+        const response = await axios.post('http://localhost:5000/users/signin', data);
+        console.log(response.data)
+        if (response.data.message==="response success")
+        {
+>>>>>>> 3eaafe82493eee69066adaef50f81e8b8c2609b6
           toast.success("User created successfully")
           emailjs.sendForm('service_203o8iw', 'template_qnoprc4', formRef.current, '9rndwk3q5_ec5AzuH').then(
                 (result) => {
@@ -69,8 +100,24 @@ function Signup() {
           formRef.current.reset()
 
         }
+<<<<<<< HEAD
         else if (response.data.message === "Failed to register user.") {
+=======
+        else if (response.data.message==="username or mail id already exists")
+        {
+>>>>>>> 3eaafe82493eee69066adaef50f81e8b8c2609b6
           toast.error("Failed to register")
+          formRef.current.reset()
+        }
+        else if(response.data==='not an organisation mail')
+        {
+          toast.error("Enter the organisation mail")
+          formRef.current.reset()
+        }
+        else if(response.data==='Passoword is weak')
+        {
+          toast.error("Password must contain atleast 1 uppercase,1 special character,1 numeric character and min 8 characters")
+          formRef.current.reset()
         }
       } catch (error) {
         console.log("error i got backend", error);
@@ -86,6 +133,7 @@ function Signup() {
         formRef.current.reset()
       }
 
+<<<<<<< HEAD
       //   const response = await axios.post('http://localhost:3001/api/register', data);
 
 
@@ -102,10 +150,13 @@ function Signup() {
       //   // console.error(error);
 
       // }
+=======
+>>>>>>> 3eaafe82493eee69066adaef50f81e8b8c2609b6
 
     }
 
   };
+
 
 
 
@@ -124,7 +175,11 @@ function Signup() {
           </div>
           <div className="input-container">
             <i className="fa-regular fa-envelope"></i>
+<<<<<<< HEAD
             <input name="user_email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+=======
+            <input name="user_email" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+>>>>>>> 3eaafe82493eee69066adaef50f81e8b8c2609b6
           </div>
           <div className="input-container">
             <i className="fa-solid fa-lock"></i>
