@@ -117,7 +117,7 @@ export default function Archieve() {
     return (
         <>
             <Button className='archieve' variant="primary" onClick={() => setModalShow(true)}>
-                Archieve  <i class="fa-solid fa-recycle"></i>
+                Archieve  <i class="fa-solid fa-trash-arrow-up"></i>
             </Button>
             <Training
                 show={modalShow}

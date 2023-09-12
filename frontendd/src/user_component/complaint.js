@@ -34,7 +34,7 @@ export default function Complaint() {
     return (
         <>
             <button className="complaint" onClick={handleShow}>
-                Complaint <i className="fa-solid fa-clipboard-question"></i>
+                Feedback <i class="fa-regular fa-thumbs-up"></i>
             </button>
             <Modal show={showModal} onHide={handleClose} className="complaint">
                 <form ref={form} onSubmit={sendEmail}>

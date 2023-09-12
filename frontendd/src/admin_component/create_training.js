@@ -1,4 +1,7 @@
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import './style.scss'
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -8,9 +11,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import View_training from './view_trainings';
 import Archieve from './archieve';
-import Navbar from './navbar';
-import { ToastContainer, toast } from 'react-toastify';
-import { Navigate, useNavigate } from 'react-router-dom';
+import Navbar from './adminnavbar';
 // import Swal from 'sweetalert2';
 
 
@@ -25,31 +26,26 @@ function MyFormModal(props) {
         domain: 'Full Stack', // Default domain value
         seats: 1, // Default seats value
     });
-    const navigate=useNavigate()
 
     const handleSubmit = async (e) => {
         console.log("abcd check", startDate, endDate)
         console.log("working", training);
         e.preventDefault();
         try {
-            console.log(training)
-            const response = await axios.post('http://localhost:5000/users/admin', training, {
+            const response = await axios.post('http://localhost:5001/api/data', training, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
             if (response.status === 200) {
-                toast.success('Training created successfully')
-                setTimeout(() => {
-                    navigate('/')
-                  }, 3000)
-                
+                console.log('Scheduled training:', response.data);
+                // Swal.fire('Training Created Successfully');
             } else {
-                toast.error('Set training failed');
+                console.error('Set training failed');
             }
         } catch (error) {
-            console.log('Registering error:', error);
+            console.error('Registering error:', error);
         }
     };
 
@@ -63,7 +59,6 @@ function MyFormModal(props) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <ToastContainer></ToastContainer>
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Training Schedule
@@ -116,7 +111,7 @@ function MyFormModal(props) {
                                             <textarea
                                                 id="description"
                                                 placeholder="Leave a comment here"
-                                                value={training.description}
+                                                lue={training.description}
                                                 onChange={(e) => setTraining({ ...training, description: e.target.value })}
                                                 
                                             ></textarea>
@@ -236,7 +231,7 @@ export default function Admin_training() {
                                             <div className="card-body">
                                                 <p className='card-text'>"Effortlessly create and customize training sessions for your team's growth and development needs"</p>
                                                 <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                                                    Schedule Now  <i className="fa-regular fa-calendar"></i>
+                                                    Schedule  <i className="fa-regular fa-calendar"></i>
                                                 </Button>
                                             </div>
                                         </div>
@@ -244,7 +239,7 @@ export default function Admin_training() {
                                     <div className="col-lg-4">
                                         <div className="card">
                                             <div className="card-header">
-                                                <h3> Trainings</h3>
+                                                <h3>Trainings</h3>
                                             </div>
                                             <div className="card-body">
                                                 <p className='card-text'>"Easily view and manage scheduled training sessions to keep your team's learning on track."</p>
@@ -257,7 +252,7 @@ export default function Admin_training() {
                                     <div className="col-lg-4">
                                         <div className="card">
                                             <div className="card-header">
-                                                <h3>History</h3>
+                                                <h3> History</h3>
                                             </div>
                                             <div className="card-body">
                                                 <p className='card-text'>"Access deleted training records and perform resets as needed for seamless course management."</p>

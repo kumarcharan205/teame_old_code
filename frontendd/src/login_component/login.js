@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.scss';
@@ -63,13 +63,14 @@ function Login() {
     <div className="login-container">
       <div className="login-left">
         <ToastContainer />
-        <img src="/login/login3.png" alt="Login" />
+        <img src="login_bg.png" alt="Login" className="imagefirst"/>
+        <img src="Login-logo-signup.92ae013a.png" className="pngimg"/>
       </div>
       <div className="login-right">
-        <h1 className="h1">Welcome Back :)</h1>
         <form onSubmit={validationReg}>
+        <h1 className="heading">Welcome Back :)</h1>
           <div className="login-input-container">
-            <i className="fa-regular fa-envelope"></i>
+            <i className="fa-regular fa-envelope"></i>  
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}
