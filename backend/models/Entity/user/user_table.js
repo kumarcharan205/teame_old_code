@@ -1,6 +1,6 @@
-const { TRAININGS } = require("..");
-const admin_table = require("../admin/Schedule_training");
-const registered_user_table = require("../trainings/registered_user_table");
+// const { TRAININGS } = require("..");
+// const admin_table = require("../admin/Schedule_training");
+// const registered_user_table = require("../trainings/registered_user_table");
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('users', {
@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         isadmin: {
             type: DataTypes.BOOLEAN,
+            defaultValue:false,
         },
             
     },{

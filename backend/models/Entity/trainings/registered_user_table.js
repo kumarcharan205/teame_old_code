@@ -1,5 +1,5 @@
-const { USER } = require("..");
-const user_table = require("../user/user_table");
+// const { USER } = require("..");
+// const user_table = require("../user/user_table");
 
 module.exports = (sequelize, DataTypes) => {
     const Training = sequelize.define('registered_users', {

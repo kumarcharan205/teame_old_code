@@ -6,24 +6,23 @@ const create_training = async (req, res) => {
 
     try {
         console.log("I'm here")
-        if (req.body.training_name && req.body.trainer && req.body.skill_title &&
-            req.body.description && req.body.domain && req.body.startdate &&
-            req.body.enddate  && req.body.no_of_seats) {
+        if (req.body) {
+            console.log(req.body)
             const { training_name,trainer,skill_title,description,domain,startdate,enddate,no_of_seats} = req.body
-            console.log("req body", req.body)
-
+            console.log("req body", req.body.startDate,typeof(req.body.startDate))
+            console.log(trainer,skill_title,description,no_of_seats,domain)
             await Admin.create({
-                training_name: training_name,
-                trainer:trainer,
-                skill_title:skill_title,
-                description:description,
-                domain:domain,
-                startdate:startdate,
-                enddate:enddate,
-                no_of_seats:no_of_seats
+                training_name: req.body.training_name,
+                trainer:req.body.trainer,
+                skill_title:req.body.skill,
+                description:req.body.description,
+                domain:req.body.domain,
+                startdate:req.body.startDate.toLocaleString(),
+                enddate:req.body.endDate,
+                no_of_seats:req.body.seats,
             });
 
-            res.send({ statusCode: 200, message: 'response success' })
+            res.send({message:'response success' })
            
         }
         else {
@@ -31,7 +30,7 @@ const create_training = async (req, res) => {
         }
     } catch (error) {
         console.log("error")
-        res.send({ statusCode: 400, message: 'username or mail id already exists' })
+        res.send({ statusCode: 400, message: 'db error' })
 
     }
 }

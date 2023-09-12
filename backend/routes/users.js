@@ -15,7 +15,8 @@ router.get('/get_trainings',Admin.view_trainings)
 router.post('/restore',Admin.restore_trainings)
 
 ///Use routes
-router.post("/",User.create_user);// for creating the user
+router.post("/",User.login);// for creating the user
+router.post("/signin",User.create_user);// for creating the user
 router.post('/register',User.register_training) //for registering user to the training
 router.get("/get/:id",User.training_details)
 router.get("/view_trainings/:id",User.view)

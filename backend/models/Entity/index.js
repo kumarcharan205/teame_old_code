@@ -14,7 +14,8 @@ const sequelize= new Sequelize(
     db_config.USER,
     db_config.PASSWORD,{
         host:db_config.HOST,
-        dialect:db_config.DIALECT
+        dialect:db_config.DIALECT,
+        // timezone: '+05:30'
     }
 ) 
 
