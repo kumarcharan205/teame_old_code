@@ -24,88 +24,98 @@ function Signup() {
     }, 3000);
     return () => clearInterval(interval); // Clear the interval on unmount
   }, []);
+
   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+
+  const isValid = /@jmangroup\.com$/
+
+      
   const validationReg = async (e) => {
+
     e.preventDefault()
+
     const data = {
+
       name: name,
+
       email: email,
+
       password: password,
+
     };
+
     if (name.trim() === '' || email.trim() === '' || password.trim() === '') {
+
       toast.error('Please fill in all fields.');
+
     }
+
     else if (!passwordRegex.test(password)) {
+
       // Password doesn't meet the criteria
+
       toast.error("Password must contain at least 1 capital letter, 1 special character, and be at least 8 characters long.");
+
       formRef.current.reset()
+
     }
     else if (password !== repassword) {
+
       toast.error("Password doesn't match")
+
+      formRef.current.reset()
+
+    }
+    else if(!isValid.test(email)){
+      toast.error("Enter the organisation mail")
       formRef.current.reset()
     }
+
     else {
+      
+
       try {
-        const response = await axios.post('http://localhost:3001/api/register', data);
-        console.log(response.data.message)
-        if (response.data.message === "User registered successfully.") {
+        const response = await axios.post('http://localhost:5000/users/signin', data);
+        console.log(response.data)
+        if (response.data.message==="response success")
+        {
           toast.success("User created successfully")
-          emailjs.sendForm('service_203o8iw', 'template_qnoprc4', formRef.current, '9rndwk3q5_ec5AzuH').then(
-                (result) => {
-                    console.log(result.text);
-                    // formRef.current.reset()
-                },
-                (error) => {
-                    console.log(error.text);
-                }
-            );
-        
-          setTimeout(() => {
+          setTimeout(()=>{
             navigate('/')
-          }, 3000)
+          },3000)
         }
-        else if (response.data.message === "user already exists") {
+        else if (response.data.message==="user already exists")
+        {
           toast.error("user already  exists")
           formRef.current.reset()
 
         }
-        else if (response.data.message === "Failed to register user.") {
+        else if (response.data.message==="username or mail id already exists")
+        {
           toast.error("Failed to register")
+          formRef.current.reset()
+        }
+        else if(response.data==='not an organisation mail')
+        {
+          toast.error("Enter the organisation mail")
+          formRef.current.reset()
+        }
+        else if(response.data==='Passoword is weak')
+        {
+          toast.error("Password must contain atleast 1 uppercase,1 special character,1 numeric character and min 8 characters")
+          formRef.current.reset()
         }
       } catch (error) {
-        console.log("error i got backend", error);
-      //   emailjs.sendForm('service_203o8iw', 'template_qnoprc4', formRef.current, '9rndwk3q5_ec5AzuH').then(
-      //     (result) => {
-      //         console.log(result.text);
-      //     },
-      //     (error) => {
-      //         console.log(error.text);
-      //     }
-      // );
+        console.log("error i got backend",error);
         toast.error("Failed in register in server")
         formRef.current.reset()
       }
 
-      //   const response = await axios.post('http://localhost:3001/api/register', data);
-
-
-      //   console.log(response.data.message);
-      //   toast.success("Account Created Successfully")
-      //   setTimeout(()=>{
-
-      //     navigate('/')
-      //   },3000)
-
-
-      // } catch (error) {
-      //   console.log("error i got",error.message)
-      //   // console.error(error);
-
-      // }
 
     }
 
   };
+
 
 
 
@@ -124,7 +134,7 @@ function Signup() {
           </div>
           <div className="input-container">
             <i className="fa-regular fa-envelope"></i>
-            <input name="user_email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
+            <input name="user_email" type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
           </div>
           <div className="input-container">
             <i className="fa-solid fa-lock"></i>
