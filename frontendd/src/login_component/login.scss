@@ -17,7 +17,7 @@ body {
 
 h1 {
   color: rgb(25, 16, 91);
-  margin-bottom: 20%;
+  margin-bottom: 2%;
 }
 
 .heading {
@@ -31,14 +31,15 @@ img {
 
 form {
   margin-left: 0px;
+  box-shadow: none !important;
 }
 
 .login-right {
-  margin-top: 3%;
+  margin-top: 12%;
   flex: 1;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  // border-radius: 8px;
+  // box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .login-right h2 {
@@ -57,8 +58,8 @@ form {
 .login-right input {
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  // border: 1px solid #ccc;
+  // border-radius: 4px;
 }
 
 .loginbutton {
@@ -92,7 +93,7 @@ form {
 
 .login-input-container {
   position: relative;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   margin-left: 15%;
 }
 
@@ -111,13 +112,17 @@ form {
   border-bottom: 1px solid #ccc;
   width: 60%;
   outline: none;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 .buttons {
   margin-left: 15%;
 }
 
+i{
+  padding-left: 12%;
+  padding-top: 2%;
+}
 
 @media screen and (max-width: 300px) {
   .login-left {
