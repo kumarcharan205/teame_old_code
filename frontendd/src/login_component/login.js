@@ -1,59 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './login.css';
+import './login.scss';
 import { ToastContainer, toast } from 'react-toastify';
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const formref = useRef()
 
   const validationReg = async (e) => {
     e.preventDefault();
-
-    if (email.trim() !== '' && password.trim() !== '') {
-      try {
-        const response = await axios.post('http://localhost:3001/api/login', {
-          email,
-          password,
-        });
-        console.log("adminstatus",response.data.user.isadmin)
-        const adminStatus=response.data.user.isadmin
-        console.log("response from backend",response.data.message);
-        if(response.data.message==='Login successful.' && adminStatus===0)
-        {
-          toast.success("Login successful")
-          setTimeout(()=>{
-            navigate('/userform')
-          },3000)
+    debugger;
+    const isValid = /@jmangroup\.com$/.test(email);
+    if (!isValid) {
+      console.log('invalid')
+      toast.error("Enter the organisation mail")
+      formref.current.reset()
+    }
+    else {
+      if (email.trim() !== '' && password.trim() !== '') {
+        try {
+          const response = await axios.post('http://localhost:5000/users/', {
+            email,
+            password,
+          });
+          console.log("response from backend", response.data.message);
+          if (response.data.message === 'User logged') {
+            toast.success("Login successful")
+            setTimeout(() => {
+              navigate('/userform',{state:{user_id:response.data.data}})
+            }, 3000)
+          }
+          else if (response.data.message === 'Admin logged') {
+            console.log("admin authenticate")
+            toast.success(" Admin Login successful")
+            setTimeout(() => {
+              navigate('/admin_training')
+            }, 3000)
+          }
+          else if(response.data ==='invaild mail')
+          {
+            toast.error("Enter the organisation mail")
+            formref.current.reset()
+          }
+          else if(response.data==='Passoword is weak')
+          {
+            toast.error("Password must contain atleast 1 uppercase,1 special character,1 numeric character and min 8 characters")
+          }
         }
-        else if(response.data.message==='Login successful.' && adminStatus===1)
-        {
-          toast.success(" Admin Login successful")
-          setTimeout(()=>{
-            navigate('/admin_training')
-          },3000)
+
+        catch (error) {
+          console.error('Sign-in error:', error);
         }
 
-       
-      } catch (error) {
-        console.error('Sign-in error:', error);
       }
     }
-  };
+  }
 
   return (
     <div className="login-container">
       <div className="login-left">
         <ToastContainer />
-        <img src="/login/login3.png" alt="Login" />
+        <img src="login_bg.png" alt="Login" className="imagefirst"/>
+        <img src="Login-logo-signup.92ae013a.png" className="pngimg"/>
       </div>
       <div className="login-right">
-        <h1 className="h1">Welcome Back :)</h1>
         <form onSubmit={validationReg}>
+        <h1 className="heading">Welcome Back :)</h1>
           <div className="login-input-container">
-            <i className="fa-regular fa-envelope"></i>
+            <i className="fa-regular fa-envelope"></i>  
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}

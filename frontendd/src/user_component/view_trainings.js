@@ -2,20 +2,19 @@ import React, { useState, useEffect } from "react";
 
 import './style.css';
 
-export default function Users({usersData,searchQuery,handleRegister}) {
+export default function View_trainings({usersData,searchQuery,handleRegister}) {
 
-    const filteredUsersData = usersData.filter((uData) => {
-    return uData.domain.toLowerCase().includes(searchQuery.toLowerCase())
+    // const filteredUsersData = usersData.filter((uData) => {
+    // return uData.domain.toLowerCase().includes(searchQuery.toLowerCase())
      
-    })
+    // })
 
     return (
         <React.Fragment>
 
             <>
-            {console.log("filter",filteredUsersData)}
                 {
-                    filteredUsersData.map((uData, index) => (
+                    usersData.map((uData, index) => (
                        
                         <tr key={uData.id}>
                             {/* <td>{uData.id} </td> */}
@@ -33,17 +32,17 @@ export default function Users({usersData,searchQuery,handleRegister}) {
                                     disabled={uData.availableseats === 0 || uData.registered}
                                 >
                                     <span>
-                                        {/* {uData.registered ? (
+                                        {uData.registered ? (
                                             <span style={{ backgroundColor: 'green', padding: '8px',borderRadius:'3px' }}>
-                                                Registered
+                                                UnRegister
                                             </span>
-                                        ) : ( */}
+                                        ) : (
                                             <span style={{ backgroundColor: '#ff6196', padding: '8px',borderRadius:'3px' }}>
-                                        Register 
-                                   </span>
+                                        Register
+                                    </span>
 
                             
-                                         {/* )}  */}
+                                        )}
                                 </span>
                             </button>
                         </td>

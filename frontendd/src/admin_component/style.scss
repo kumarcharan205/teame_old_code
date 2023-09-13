@@ -1,0 +1,184 @@
+$primary-background:rgb(25,16,91);
+$navbar:linear-gradient(#19105b, #472067, #7c3375, #ff6196);
+
+/* Admin page cards */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.container {
+  max-width: 960px;
+}
+
+.pricing-header {
+  max-width: 700px;
+}
+h3 {
+  color: $primary-background !important;
+}
+.card-deck .card {
+  min-width: 220px;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+/* Nav bar */
+body,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  background: $navbar;
+  width: 10%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.welcomeAdmin {
+  color: white;
+  font-size: 20px;
+  margin-top: 50%;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  margin-left: 10%;
+  padding: 20px;
+}
+
+.logout-btn-div {
+  width: 100%;
+}
+
+.logOut {
+  background: none !important;
+}
+
+.logout {
+  padding-left: 50px !important;
+}
+
+/* maincontent */
+@media (min-width: 768px) {
+  .maincontent {
+    margin: 15% 0 0 30%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .maincontent {
+    margin: 10% 0 0 15%;
+  }
+}
+
+@media (max-width: 767px) {
+  .maincontent {
+    margin: 10% 0 0 10%;
+  }
+}
+
+/* buttons */
+._button {
+  background-color: #ff6196 !important;
+  color: white;
+  border: none !important;
+  width: 100%;
+}
+
+
+
+/* Admin page all styles */
+
+button[type="submit"]:hover {
+  background-color: $primary-background  !important;
+}
+
+.close {
+  color: white;
+  border: none;
+  padding: 8px 25px !important;
+  margin-top: 5%;
+  float: right;
+  font-size: 5%;
+  cursor: pointer;
+  transform: skewX(-15deg);
+  background-color: $primary-background  !important;
+  border-color: $primary-background  !important;
+}
+
+form {
+  margin-left: 0  !important;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  resize: none;
+  min-width: 50px;
+  max-height: 200px; /* You can adjust this value as needed */
+}
+
+/* Style form labels */
+label {
+  font-weight: bold;
+}
+
+/* Style form inputs and textarea */
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* 3D cards  */
+
+.card {
+  transition: transform 0.3s ease; 
+}
+
+.card:hover {
+  transform: translateY(-5px); 
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
+}

@@ -1,0 +1,375 @@
+.login-container {
+  display: flex;
+  max-height: 100%;
+}
+
+.login-left {
+  flex: 1;
+  height: 100vh;
+}
+
+h1 {
+  color: rgb(25, 16, 91);
+  margin-bottom: 20%;
+}
+.h1 {
+  margin-left: 15%;
+}
+img {
+  max-width: 100%;
+  height: 100%;
+}
+
+form {
+  margin-left: 0px;
+}
+.login-right {
+  margin-top: 3%;
+  flex: 1;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-right h2 {
+  margin-bottom: 10%;
+  margin-top: 0;
+  text-align: center;
+  font-size: 24px;
+  color: rgb(25, 16, 91);
+}
+
+.login-right form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-right input {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.loginbutton {
+  background-color: rgb(25, 16, 91);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+}
+.loginbutton {
+  width: 35%;
+  margin-left: 5%;
+}
+.oldloginbutton {
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+.oldloginbutton {
+  width: 35%;
+}
+
+.login-input-container {
+  position: relative;
+  margin-bottom: 5%;
+  margin-left: 15%;
+}
+
+.login-input-container i {
+  position: absolute;
+  left: 10px;
+  top: 30%;
+  transform: translateY(-50%);
+  color: #ccc;
+}
+
+.login-input-container input {
+  padding-left: 30px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 60%;
+  outline: none;
+  margin-bottom: 5%;
+}
+
+.buttons {
+  margin-left: 15%;
+}
+@media screen and (max-width: 300px) {
+  .login-left {
+    height: 50vh;
+  }
+  .pngimg {
+    position: absolute;
+    z-index: 999;
+    left: 32%;
+    top: 3%;
+    height: 9%;
+    width: 36%;
+  }
+  .oldloginbutton {
+    margin-left: -20px;
+  }
+  .olduserbutton {
+    font-size: 100px;
+    position: initial;
+  }
+  .buttons {
+    font-size: 15px;
+    padding: 5px 5px;
+  }
+  .login-input-container i {
+    position: absolute;
+    left: 5%;
+    top: 22%;
+    transform: translateY(-10%);
+    color: #ccc;
+    font-size: 14px;
+  }
+  .login-input-container input {
+    padding-left: 17px;
+    font-size: 5px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 70%;
+    outline: none;
+    margin-bottom: 10%;
+  }
+  .login-right form input {
+    font-size: 12px;
+  }
+
+  .signup-right h1 {
+    font-size: 18px;
+  }
+  .login-right {
+    margin-top: 40%;
+    margin-left: -100%;
+    padding: 0px;
+  }
+  .login-left {
+    padding: 0px;
+  }
+  .login-right form {
+    background-color: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+  .heading {
+    color: black;
+    font-size: large;
+  }
+  .loginbutton {
+    padding: 2px 2px;
+    font-size: 13px;
+  }
+  .oldloginbutton {
+    font-size: 13px;
+    padding: 2px 2px;
+    border: none;
+  }
+}
+@media screen and (min-width: 300px) and (max-width: 400px) {
+  .login-left {
+    height: 60vh;
+    background-size: 100% 100%;
+  }
+
+  .pngimg {
+    position: absolute;
+    z-index: 1;
+    left: 32%;
+    top: 2%;
+    height: 14%;
+    width: 50%;
+  }
+  .login-right {
+    margin-top: 50%;
+    margin-left: -100%;
+    padding: 0px 0px;
+  }
+  .login-input-container i {
+    position: absolute;
+    left: 2%;
+    top: 22%;
+    transform: translateY(-45%);
+    color: #ccc;
+    font-size: 14px;
+  }
+  .login-input-container input {
+    padding-left: 10px;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    outline: none;
+    margin-bottom: 10%;
+  }
+  .oldloginbutton {
+    font-size: 14px;
+    padding: 2px 2px;
+    border: none;
+    margin-left: -15%;
+  }
+  .login-right form {
+    height: 100vh;
+  }
+}
+@media screen and (min-width: 401px) and (max-width: 500px) {
+  .login-left {
+    height: 65vh;
+    background-size: 100% 100%;
+  }
+  .pngimg {
+    position: absolute;
+    z-index: 999;
+    left: 32%;
+    top: 5%;
+    height: 30%;
+    width: 50%;
+  }
+  .login-right {
+    margin-top: 50%;
+    margin-left: -100%;
+    padding: 0px 0px;
+  }
+  .login-input-container i {
+    position: absolute;
+    left: 2%;
+    top: 22%;
+    transform: translateY(-45%);
+    color: #ccc;
+    font-size: 14px;
+  }
+  .login-input-container input {
+    padding-left: 10px;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    outline: none;
+    margin-bottom: 10%;
+  }
+  .oldloginbutton {
+    font-size: 14px;
+    padding: 2px 2px;
+    border: none;
+    margin-left: -15%;
+  }
+  .login-right form {
+    height: 100vh;
+  }
+}
+@media screen and (min-width: 501px) and (max-width: 800px) {
+  .login-left {
+    height: 80vh;
+    background-size: 100% 100%;
+  }
+
+  .pngimg {
+    position: absolute;
+    z-index: 1;
+    left: 32%;
+    top: 5.5%;
+    height: 10%;
+    width: 50%;
+  }
+
+  .login-right form {
+    height: 100vh;
+  }
+
+  .login-right {
+    margin-top: 35%;
+    margin-left: -100%;
+    padding: 0px 0px;
+    background-color: none;
+  }
+
+  .login-input-container i {
+    position: absolute;
+    left: 2%;
+    top: 22%;
+    transform: translateY(-45%);
+    color: #ccc;
+    font-size: 14px;
+  }
+
+  .login-input-container input {
+    padding-left: 10px;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    outline: none;
+    margin-bottom: 10%;
+  }
+
+  .oldloginbutton {
+    font-size: 14px;
+    padding: 2px 2px;
+    border: none;
+    margin-left: -15%;
+  }
+}
+@media screen and (min-width: 801px) and (max-width: 1000px) {
+  .login-left {
+    height: 100vh;
+    background-size: 100% 100%;
+  }
+
+  .pngimg {
+    position: absolute;
+    z-index: 1;
+    left: 40%;
+    top: 8%;
+    height: 10%;
+    width: 50%;
+  }
+
+  .login-right form {
+    height: 100vh;
+  }
+
+  .login-right {
+    margin-top: 35%;
+    margin-left: -100%;
+    padding: 0px 0px;
+    background-color: none;
+  }
+
+  .login-input-container i {
+    position: absolute;
+    left: 2%;
+    top: 22%;
+    transform: translateY(-45%);
+    color: #ccc;
+    font-size: 14px;
+  }
+
+  .login-input-container input {
+    padding-left: 10px;
+    font-size: 12px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 80%;
+    outline: none;
+    margin-bottom: 10%;
+  }
+
+  .oldloginbutton {
+    font-size: 14px;
+    padding: 2px 2px;
+    border: none;
+    margin-left: -15%;
+  }
+}

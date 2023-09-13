@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 
 function Training(props) {
     const [tableData, setTableData] = useState([]);
-    const handleDelete = async (itemId) => {
+    const UndoDelete = async (itemId) => {
         try {
             const response = await fetch(`http://localhost:5001/api/delete-training/${itemId}`, {
                 method: 'DELETE',
@@ -73,9 +73,7 @@ function Training(props) {
                             <th scope="col">Trainer</th>
                             <th scope="col">Domain</th>
                             <th scope="col">Start Date</th>
-                            <th scope="col">Start Time</th>
                             <th scope="col">End Date</th>
-                            <th scope="col">End Time</th>
                             <th scope="col">RegisteredUsers</th>
                             <th scope="col">VacanciesLeft</th>
                             <th scope="col"> </th>
@@ -93,7 +91,7 @@ function Training(props) {
                                 <td>{item.EndDate}</td>
                                 <td>{item.RegisteredUsers}</td>
                                 <td>{item.VacanciesLeft}</td>
-                                <td><button onClick={handleDelete}><i class="fa-solid fa-trash"></i></button></td>
+                                <td><button onClick={UndoDelete}><i class="fa-solid fa-trash"></i></button></td>
                                 
                             </tr>
                         ))}
@@ -113,13 +111,13 @@ function Training(props) {
 }
 
 // export default Training;
-export default function View_training() {
+export default function Archieve() {
     const [modalShow, setModalShow] = useState(false);
 
     return (
         <>
-            <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                Upcomimg  <i class="fa-solid fa-forward"></i>
+            <Button className='archieve' variant="primary" onClick={() => setModalShow(true)}>
+                Archieve  <i class="fa-solid fa-trash-arrow-up"></i>
             </Button>
             <Training
                 show={modalShow}

@@ -1,79 +1,210 @@
 import React, { useState, useEffect } from 'react'
 import Users from './Users';
+import './style.css'
 import { useLocation } from 'react-router-dom';
-function UserForm() {
+import Navbar from '../user_component/usernavbar';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import View_trainings from './view_trainings';
 
-    const location=useLocation()
-    const user=location.state
-    console.log(user)
-    const [userdata, setUserdata] = useState([]);
-    const getUserdata = async () => {
+
+function UserForm() {
+ 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Track sidebar open/close state
+  const [userdata, setUserdata] = useState([]);
+  const [filteredUserData, setFilteredUserData] = useState(userdata);
+  const [traindata,setTraindata]=useState([])
+  const [id,setId]=useState('')
+  const location = useLocation()
+  const {user_id}=location.state
+  console.log(user_id,"using location ")
+
+const user = location.state
+console.log(user)
+
+const getUserdata = async () => {
         try {
-            const req = await fetch("http://localhost:3001/users");
+            
+            setId(user_id)
+            const req = await fetch(`http://localhost:5000/users/get/${user_id}`);
             const resData = await req.json();
             if (resData.length > 0) {
-                setUserdata(resData);
+                const initialUserdata = resData.map(user => ({ ...user }));
+                setUserdata(initialUserdata);
+                console.log(":jsdbfasbndjks",initialUserdata)
+                // setFilteredUserData(initialUserdata);
+
             }
         } catch (e) {
             console.log(e);
         }
     }
+    const getregisteredUserdata = async () => {
+        try {
+            
+            setId(user_id)
+            const req = await fetch(`http://localhost:5000/users/view_trainings/${user_id}`);
+            const resData = await req.json();
+            if (resData.length > 0) {
+                const initialUserdata = resData.map(user => ({ ...user }));
+                setTraindata(initialUserdata);
+                console.log(":jsdbfasbndjks",initialUserdata)
+                // setFilteredUserData(initialUserdata);
+
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    
+  
+
     useEffect(() => {
         getUserdata();
+        getregisteredUserdata();
     }, []);
 
+    const handleRegister = async (index) => {
+        const updatedUsersData = [...userdata];
+        const userData = updatedUsersData[index];
+        console.log("updatedusedata",updatedUsersData)
+        if (userData.no_of_seats > 0) {
+          const confirmation = window.confirm('Do you want to register?');
     
+          if (confirmation) {
+            userData.no_of_seats -= 1;
+            userData.register=true
+    
+        //   const updatedFilteredUserData = filteredUserData.filter((userData, idx) => idx !== index);
+        //   setFilteredUserData(updatedFilteredUserData);
+        //   console.log("filteruserdata:====>>>>>>>",filteredUserData)
+            
+            console.log("Training_ID",userData.id)
+            try {
+              // POST request to your server to insert the user data into a separate table
+              const reg_train = await axios.post('http://localhost:5000/users/register', {
+                training_id:userData.id,
+                user_id:id,//static
+            }).then((response) => {
+                
+                console.log(response.data.message)
+            }).catch((e) => {
+                console.log(e)
+            })
+              const updatedUsersData = [...userdata];
+              updatedUsersData[index] = userData;
+              updatedUsersData.splice(index, 1);
+            toast.success("Registeration successful")
+              setUserdata(updatedUsersData);
+              console.log('User registered successfully',userData);
+            } catch (error) {
+              console.error('Error registering user:', error);
+            }
+          }
+          
+        }
+      };
+
+
     return (
         <div>
-            <div class="for w-100">
-                <div class="container-fluid">
-                    <div class="row flex-nowrap">
-                        <div class=" col-auto col-md-3 col-xl-2 px-sm-2 px-0" style={{ background: 'linear-gradient(#19105b, #472067, #7c3375, #FF6196)' , width:"10%" }}>
-                            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-                                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                                    <li class="nav-item text-white">
-                                        <a class="nav-link align-middle px-0">
-                                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">Hello User</span>
-                                        </a>
+            <div className="for w-100">
+                <div className="container-fluid">
+                    <Navbar />
+                    <ToastContainer/>
+                    <React.Fragment>
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                        <strong>Available Trainings </strong>
+                                    </button>
+                                </h2>
 
-                                    </li>
-                                </ul>
-                                <hr />
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                    <div className="accordion-body">
+                                        <div className="form-group pull-right">
+                                            <input 
+                                            id='search' 
+                                            type="text" 
+                                            className="search form-control" 
+                                            placeholder=" &#x1F50D; Search Trainings by domain"  
+                                            value={searchQuery}
+                                            onChange={e => setSearchQuery(e.target.value)}></input>
+                                        </div>
+                    
+
+                                        <table className="table table-hover table-bordered results" id="allTrainings">
+                                            <thead>
+                                                <tr>
+                                                    {/* <th>S.No</th> */}
+                                                    {/* <th >Domain Name</th> */}
+                                                    <th >Domain Name</th>
+                                                    <th >Training Name</th>
+                                                    
+                                                    <th >Start Date </th>
+                                                    <th >Start Time</th>
+                                                    <th >End Date</th>
+                                                    <th >End Time</th>
+
+                                                    <th >Available Seats</th>
+                                                    <th >Enroll</th>
+                                                </tr>
+                                                <tr className="warning no-result">
+                                                    <td colspan="4"><i className="fa fa-warning"></i> No result</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <Users usersData={userdata} searchQuery={searchQuery} handleRegister={handleRegister} />
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <React.Fragment>
-                            <div class=" p-3 overflow-auto" style={{ height: '100vh' }}>
-                                <div className="App">
-                                    <div className='container'>
-                                        <div className='row'>
-                                            <div className='col-md-8'>
-                                            <table className='table' style={{ marginTop: '10%'}}>
-                                                    <thead className="table bg-primary bg-midnight-blue" >
-                                                        <tr >
-                                                            <th>Sno</th>
-                                                            <th>Domain Name</th>
-                                                            <th>Training Name</th>
-                                                            <th>Start Date</th>
-                                                            <th>End Date</th>
-                                                            <th>Available Seats</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <Users usersData={userdata} />
-                                                    </tbody>
 
-                                                </table>
-                                            </div>
-                                        </div>
+                        <div class="accordion accordion-flush " id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <strong>Registered Trainings</strong>
+                                    </button>
+                                </h2>
+
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div className="accordion-body">
+
+                                        <table className="table table-hover table-bordered results" id="allTrainings">
+                                            <thead>
+                                                <tr>
+                                                    {/* <th>S.No</th> */}
+                                                    {/* <th >Domain Name</th> */}
+                                                    <th >Domain Name</th>
+                                                    <th >Training Name</th>
+                                                    <th >Start Date </th>
+                                                    <th >Start Time</th>
+                                                    <th >End Date</th>
+                                                    <th >End Time</th>
+                                                    <th >Available Seats</th>
+                                                    <th > UnEnroll</th>
+                                                </tr>
+                                                <tr className="warning no-result">
+                                                    <td colspan="4"><i className="fa fa-warning"></i> No result</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <View_trainings usersData={traindata}/>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div></div>
-                        </React.Fragment>
-
-                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </React.Fragment >
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 
