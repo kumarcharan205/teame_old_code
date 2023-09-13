@@ -51,8 +51,8 @@ function Login() {
         <img src="Login-logo-signup.92ae013a.png" className="pngimg"/>
       </div>
       <div className="login-right">
-        <h1 className="heading">Welcome Back :)</h1>
         <form onSubmit={validationReg}>
+        <h1 className="heading">Welcome Back :)</h1><br/>
           <div className="login-input-container">
             <i className="fa-regular fa-envelope"></i>  
             <input
