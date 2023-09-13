@@ -5,7 +5,7 @@ import './style.css';
 export default function Users({usersData,searchQuery,handleRegister}) {
 
     const filteredUsersData = usersData.filter((uData) => {
-    return uData.domain.toLowerCase().includes(searchQuery.toLowerCase())
+    return uData.training_name.toLowerCase().includes(searchQuery.toLowerCase())
      
     })
 
@@ -21,6 +21,7 @@ export default function Users({usersData,searchQuery,handleRegister}) {
                             {/* <td>{uData.id} </td> */}
                             <td>{uData.domain}</td>
                             <td>{uData.training_name} </td>
+                            <td>{uData.trainer}</td>
                             <td>{(uData.startdate).split('T')[0]} </td>
                             <td>{new Date((uData.startdate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} </td>
                             <td>{(uData.enddate).split('T')[0]}</td>
@@ -30,7 +31,7 @@ export default function Users({usersData,searchQuery,handleRegister}) {
                                 <button
                                     onClick={() => handleRegister(index)}
                                     className={`btn text-white`}
-                                    disabled={uData.availableseats === 0 || uData.registered}
+                                    disabled={uData.no_of_seats === 0 || uData.registered}
                                 >
                                     <span>
                                         {/* {uData.registered ? (
@@ -39,7 +40,7 @@ export default function Users({usersData,searchQuery,handleRegister}) {
                                             </span>
                                         ) : ( */}
                                             <span style={{ backgroundColor: '#ff6196', padding: '8px',borderRadius:'3px' }}>
-                                        Register 
+                                        Enroll 
                                    </span>
 
                             

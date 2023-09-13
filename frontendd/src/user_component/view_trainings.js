@@ -19,30 +19,31 @@ export default function View_trainings({usersData,searchQuery,handleRegister}) {
                         <tr key={uData.id}>
                             {/* <td>{uData.id} </td> */}
                             <td>{uData.domain}</td>
+                            
                             <td>{uData.training_name} </td>
+                            <td>{uData.trainer}</td>
                             <td>{(uData.startdate).split('T')[0]} </td>
                             <td>{new Date((uData.startdate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} </td>
                             <td>{(uData.enddate).split('T')[0]}</td>
                             <td>{new Date((uData.enddate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })} </td>
-                            <td>{uData.no_of_seats} </td>
                             <td className="btn-btn">
                                 <button
                                     onClick={() => handleRegister(index)}
                                     className={`btn text-white`}
-                                    disabled={uData.availableseats === 0 || uData.registered}
+                                    disabled={uData.no_of_seats === 0}
                                 >
                                     <span>
-                                        {uData.registered ? (
+                                        {/* {uData.registered ? (
                                             <span style={{ backgroundColor: 'green', padding: '8px',borderRadius:'3px' }}>
                                                 UnRegister
                                             </span>
-                                        ) : (
+                                        ) : ( */}
                                             <span style={{ backgroundColor: '#ff6196', padding: '8px',borderRadius:'3px' }}>
-                                        Register
+                                        Unenroll
                                     </span>
 
                             
-                                        )}
+                                        {/* )} */}
                                 </span>
                             </button>
                         </td>

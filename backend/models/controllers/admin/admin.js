@@ -20,6 +20,8 @@ const create_training = async (req, res) => {
                 startdate:req.body.startDate.toLocaleString(),
                 enddate:req.body.endDate,
                 no_of_seats:req.body.seats,
+                initial_seats:req.body.seats,
+                
             });
 
             res.send({message:'response success' })
@@ -88,7 +90,6 @@ const view_trainings= async(req,res)=>{
         res.send({message:"Failed to retrieve from DB"})
         
     }
-    
 
 }
 
@@ -125,10 +126,32 @@ const restore_trainings=async(req,res)=>{
 
 }
 
+const deleted_trainings= async(req,res)=>{
+    try {
+        console.log("sdjfnasjkdfnasdfgnalkdfnal")
+        const view= await Admin.findAll({
+            where:{
+                isdelete:true
+            }
+        }).then((data)=>{
+            if(data){
+                res.send({message:"View success",data})        
+            }
+            else{
+                res.send({message:'Failed to view'})
+            }
+        })
+    } catch (error) {
+        res.send({message:"Failed to retrieve from DB"})
+        
+    }
+
+}
 module.exports = {
 
     create_training,
     delete_training,
     view_trainings,
     restore_trainings,
+    deleted_trainings
 };

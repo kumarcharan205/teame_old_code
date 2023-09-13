@@ -9,30 +9,28 @@ import View_trainings from './view_trainings';
 
 
 function UserForm() {
- 
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Track sidebar open/close state
-  const [userdata, setUserdata] = useState([]);
-  const [filteredUserData, setFilteredUserData] = useState(userdata);
-  const [traindata,setTraindata]=useState([])
-  const [id,setId]=useState('')
-  const location = useLocation()
-  const {user_id}=location.state
-  console.log(user_id,"using location ")
 
-const user = location.state
-console.log(user)
+    const [searchQuery, setSearchQuery] = useState('');
+    // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [userdata, setUserdata] = useState([]);
+    // const [filteredUserData, setFilteredUserData] = useState(userdata);
+    const [traindata, setTraindata] = useState([])
+    const [id, setId] = useState('')
+    const location = useLocation()
+    const { user_id } = location.state
+    console.log(user_id, "using location ")
 
-const getUserdata = async () => {
+
+    const getUserdata = async () => {
         try {
-            
+
             setId(user_id)
             const req = await fetch(`http://localhost:5000/users/get/${user_id}`);
             const resData = await req.json();
             if (resData.length > 0) {
                 const initialUserdata = resData.map(user => ({ ...user }));
                 setUserdata(initialUserdata);
-                console.log(":jsdbfasbndjks",initialUserdata)
+                console.log(":jsdbfasbndjks", initialUserdata)
                 // setFilteredUserData(initialUserdata);
 
             }
@@ -42,14 +40,14 @@ const getUserdata = async () => {
     }
     const getregisteredUserdata = async () => {
         try {
-            
+
             setId(user_id)
             const req = await fetch(`http://localhost:5000/users/view_trainings/${user_id}`);
             const resData = await req.json();
             if (resData.length > 0) {
                 const initialUserdata = resData.map(user => ({ ...user }));
                 setTraindata(initialUserdata);
-                console.log(":jsdbfasbndjks",initialUserdata)
+                console.log(":jsdbfasbndjks", initialUserdata)
                 // setFilteredUserData(initialUserdata);
 
             }
@@ -57,8 +55,8 @@ const getUserdata = async () => {
             console.log(e);
         }
     }
-    
-  
+
+
 
     useEffect(() => {
         getUserdata();
@@ -68,51 +66,85 @@ const getUserdata = async () => {
     const handleRegister = async (index) => {
         const updatedUsersData = [...userdata];
         const userData = updatedUsersData[index];
-        console.log("updatedusedata",updatedUsersData)
+        console.log("updatedusedata", updatedUsersData)
         if (userData.no_of_seats > 0) {
-          const confirmation = window.confirm('Do you want to register?');
-    
-          if (confirmation) {
-            userData.no_of_seats -= 1;
-            userData.register=true
-    
-        //   const updatedFilteredUserData = filteredUserData.filter((userData, idx) => idx !== index);
-        //   setFilteredUserData(updatedFilteredUserData);
-        //   console.log("filteruserdata:====>>>>>>>",filteredUserData)
-            
-            console.log("Training_ID",userData.id)
-            try {
-              // POST request to your server to insert the user data into a separate table
-              const reg_train = await axios.post('http://localhost:5000/users/register', {
-                training_id:userData.id,
-                user_id:id,//static
-            }).then((response) => {
-                
-                console.log(response.data.message)
-            }).catch((e) => {
-                console.log(e)
-            })
-              const updatedUsersData = [...userdata];
-              updatedUsersData[index] = userData;
-              updatedUsersData.splice(index, 1);
-            toast.success("Registeration successful")
-              setUserdata(updatedUsersData);
-              console.log('User registered successfully',userData);
-            } catch (error) {
-              console.error('Error registering user:', error);
-            }
-          }
-          
-        }
-      };
+            const confirmation = window.confirm('Do you want to register?');
 
+            if (confirmation) {
+                userData.no_of_seats -= 1;
+                userData.register = true
+
+
+
+                console.log("Training_ID", userData.id)
+                try {
+                    // POST request to your server to insert the user data into a separate table
+                    const reg_train = await axios.post('http://localhost:5000/users/register', {
+                        training_id: userData.id,
+                        user_id: id,//static
+                    }).then((response) => {
+
+                        console.log(response.data.message)
+                    }).catch((e) => {
+                        console.log(e)
+                    })
+                    const updatedUsersData = [...userdata];
+                    updatedUsersData[index] = userData;
+                    updatedUsersData.splice(index, 1);
+                    toast.success("Registeration successful")
+                    setTimeout(()=>{
+                        window.location.reload()
+                    },2000)
+                    setUserdata(updatedUsersData);
+                    console.log('User registered successfully', userData);
+                } catch (error) {
+                    console.error('Error registering user:', error);
+                }
+            }
+
+        }
+    };
+
+    const handleUnregister = async (index) => {
+        const updatedUsersData = [...traindata]; 
+        const userData = updatedUsersData[index];
+        console.log("updated unregister part usedata", updatedUsersData)
+
+        const confirmation = window.confirm('Do you want to register?');
+
+        if (confirmation) {
+            console.log("confirmation user id ", userData.id)
+            try {
+                const unregister = await axios.put('http://localhost:5000/users/unregister', {
+                    training_id: userData.id,
+                    user_id: id
+                }).then((data) => {
+                    debugger
+                    console.log("unregister console.log", data.data)
+                }).catch((e) => {
+                    console.log("console.error from response", e)
+                })
+                
+                const updatedUsersData = [...traindata];
+                updatedUsersData[index] = userData;
+                updatedUsersData.splice(index, 1);
+                toast.info("Training unregistered successfully")
+                setTraindata(updatedUsersData)
+                setTimeout(()=>{
+                    window.location.reload()
+                },1500)
+            } catch (error) {
+                console.log("error from db")
+            }
+        }
+    }
 
     return (
         <div>
             <div className="for w-100">
                 <div className="container-fluid">
                     <Navbar />
-                    <ToastContainer/>
+                    <ToastContainer />
                     <React.Fragment>
                         <div class="accordion" id="accordionPanelsStayOpenExample">
                             <div class="accordion-item">
@@ -125,40 +157,41 @@ const getUserdata = async () => {
                                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                                     <div className="accordion-body">
                                         <div className="form-group pull-right">
-                                            <input 
-                                            id='search' 
-                                            type="text" 
-                                            className="search form-control" 
-                                            placeholder=" &#x1F50D; Search Trainings by domain"  
-                                            value={searchQuery}
-                                            onChange={e => setSearchQuery(e.target.value)}></input>
+                                            <input
+                                                id='search'
+                                                type="text"
+                                                className="search form-control"
+                                                placeholder=" &#x1F50D; Search Trainings by domain"
+                                                value={searchQuery}
+                                                onChange={e => setSearchQuery(e.target.value)}></input>
                                         </div>
-                    
 
-                                        <table className="table table-hover table-bordered results" id="allTrainings">
-                                            <thead>
-                                                <tr>
-                                                    {/* <th>S.No</th> */}
-                                                    {/* <th >Domain Name</th> */}
-                                                    <th >Domain Name</th>
-                                                    <th >Training Name</th>
-                                                    
-                                                    <th >Start Date </th>
-                                                    <th >Start Time</th>
-                                                    <th >End Date</th>
-                                                    <th >End Time</th>
+                                        <div className="table-responsive table-responsive-sm">
+                                            <table className="table table-hover table-bordered results" id="allTrainings">
+                                                <thead>
+                                                    <tr>
+                                                        {/* <th>S.No</th> */}
+                                                        {/* <th >Domain Name</th> */}
+                                                        <th >Domain Name</th>
+                                                        <th >Training Name</th>
+                                                        <th>Trainer</th>
+                                                        <th >Start Date </th>
+                                                        <th >Start Time</th>
+                                                        <th >End Date</th>
+                                                        <th >End Time</th>
 
-                                                    <th >Available Seats</th>
-                                                    <th >Enroll</th>
-                                                </tr>
-                                                <tr className="warning no-result">
-                                                    <td colspan="4"><i className="fa fa-warning"></i> No result</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <Users usersData={userdata} searchQuery={searchQuery} handleRegister={handleRegister} />
-                                            </tbody>
-                                        </table>
+                                                        <th >Available Seats</th>
+                                                        <th >Enroll</th>
+                                                    </tr>
+                                                    <tr className="warning no-result">
+                                                        <td colspan="4"><i className="fa fa-warning"></i> No result</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <Users usersData={userdata} searchQuery={searchQuery} handleRegister={handleRegister} />
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -174,29 +207,30 @@ const getUserdata = async () => {
 
                                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                     <div className="accordion-body">
-
-                                        <table className="table table-hover table-bordered results" id="allTrainings">
-                                            <thead>
-                                                <tr>
-                                                    {/* <th>S.No</th> */}
-                                                    {/* <th >Domain Name</th> */}
-                                                    <th >Domain Name</th>
-                                                    <th >Training Name</th>
-                                                    <th >Start Date </th>
-                                                    <th >Start Time</th>
-                                                    <th >End Date</th>
-                                                    <th >End Time</th>
-                                                    <th >Available Seats</th>
-                                                    <th > UnEnroll</th>
-                                                </tr>
-                                                <tr className="warning no-result">
-                                                    <td colspan="4"><i className="fa fa-warning"></i> No result</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                               <View_trainings usersData={traindata}/>
-                                            </tbody>
-                                        </table>
+                                        <div className="table-responsive table-responsive-sm">
+                                            <table className="table table-hover table-bordered results" id="allTrainings">
+                                                <thead>
+                                                    <tr>
+                                                        {/* <th>S.No</th> */}
+                                                        {/* <th >Domain Name</th> */}
+                                                        <th >Domain Name</th>
+                                                        <th >Training Name</th>
+                                                        <th>Trainer</th>
+                                                        <th >Start Date </th>
+                                                        <th >Start Time</th>
+                                                        <th >End Date</th>
+                                                        <th >End Time</th>
+                                                        <th > UnEnroll</th>
+                                                    </tr>
+                                                    <tr className="warning no-result">
+                                                        <td colspan="4"><i className="fa fa-warning"></i> No result</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <View_trainings usersData={traindata} handleRegister={handleUnregister} />
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -207,5 +241,6 @@ const getUserdata = async () => {
         </div>
     );
 }
+
 
 export default UserForm;

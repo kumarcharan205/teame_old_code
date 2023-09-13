@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        initial_seats: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         isdelete: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

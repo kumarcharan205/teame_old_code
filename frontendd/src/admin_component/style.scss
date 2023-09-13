@@ -56,6 +56,25 @@ li {
   align-items: center;
   justify-content: space-between;
 }
+
+@media (max-width: 767px) {
+  .sidebar {
+    flex-direction: row;
+    height: 10vh;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Style for the text elements inside the horizontal sidebar */
+.sidebar p {
+    margin: 0; /* Remove default margin */
+
+}
+}
+
 .welcomeAdmin {
   color: white;
   font-size: 20px;
@@ -88,9 +107,9 @@ li {
   background: none !important;
 }
 
-.logout {
-  padding-left: 50px !important;
-}
+// .logout {
+//   padding-left: 50px !important;
+// }
 
 /* maincontent */
 @media (min-width: 768px) {
@@ -182,3 +201,48 @@ textarea {
   transform: translateY(-5px); 
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); 
 }
+
+@media (max-width: 282px) {
+  .cards {
+      margin-top: 28%;
+  }
+  }
+
+  @media(min-width: 283px) and (max-width: 359x){
+    .cards{
+        margin-top: 28%;
+    }
+   
+  }
+  
+
+@media(min-width: 360px) and (max-width: 415px){
+  .cards{
+      margin-top: 24%;
+  }
+}
+
+@media(min-width: 416px) and (max-width: 692px){
+  .cards{
+      margin-top: 15%;
+  }
+}
+
+@media(min-width: 693px) and (max-width: 767px){
+  .cards{
+      margin-top: 15%;
+  }
+}
+
+
+@media(min-width: 280px) and (max-width: 375px){
+  .col-lg-9{
+    margin-left: -25px;
+   
+  }
+  .sidebar{
+    position: absolute;
+  }
+}
+
+

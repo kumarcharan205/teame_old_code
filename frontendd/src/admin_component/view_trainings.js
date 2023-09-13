@@ -1,20 +1,30 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { ToastContainer,toast } from 'react-toastify';
 //import './training.css';
 
-function Training(props) {
-    const [tableData, setTableData] = useState([]);
+function Training() {
+    // debugger
+    const [tableData, setTableData] = useState();
+    const [modalShow, setModalShow] = useState(false);
+    const handleClose = () => setModalShow(false);
+  const handleShow = () => setModalShow(true);
     const handleDelete = async (itemId) => {
+        console.log("dfnajkfnajndfajknfafa,",itemId)
+        const training_id=itemId
         try {
-            const response = await fetch(`http://localhost:5001/api/delete-training/${itemId}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-                console.log('Item deleted successfully');
+            const response = await axios.post(`http://localhost:5000/users/dtrain`,{training_id});
+            console.log(response.data.message)
+            if (response.data.message==='Training deleted successfully') {
+                
                 const updatedTableData = tableData.filter(item => item.id !== itemId);
                 setTableData(updatedTableData);
+                toast.success("Training deleted succesfully")
+                setTimeout(()=>{
+                    window.location.reload()
+                },1500)
             } else {
                 console.error('Error deleting item');
             }
@@ -23,34 +33,33 @@ function Training(props) {
         }
     };
    
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:5001/api/training-data');
-                const text = await response.text(); 
-                console.log('Response:', text); 
-                
-                if (response.ok) {
-                    console.log('Success')
-                    const data = JSON.parse(text); 
-                    setTableData(data);
-                } else {
-                    console.error('Error response:', text);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
+    const fetchData = async () => {
+        // debugger
+        try {
+            
+            const response = await axios.get('http://localhost:5000/users/get_trainings');
+             
+            console.log("trssasdfg",response.data.data)
+            if (response.status === 200) {
+                setTableData(response.data.data);
+            } else {
+                console.log('Error response:');
             }
-        };
-    
+        } catch (error) {
+            console.log('Error fetching data:', error);
+        }
+    };
+    useEffect(() => {
         fetchData();
     }, []);
    
 
     return (
         <>
+        <ToastContainer/>
         <Modal
-            {...props}
+            show={modalShow}
+            onHide={handleClose}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -65,40 +74,45 @@ function Training(props) {
             {/* <div id="mySidenav" className="sidenav">
             </div> */}
             <div className="main-user">
-                <table className="table table-bordered">
-                    <thead>
-                    <tr>
-                            <th scope="col">S.No</th>
-                            <th scope="col">Project Name</th>
-                            <th scope="col">Trainer</th>
-                            <th scope="col">Domain</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Start Time</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">End Time</th>
-                            <th scope="col">RegisteredUsers</th>
-                            <th scope="col">VacanciesLeft</th>
-                            <th scope="col"> </th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {tableData.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.id}</td>
-                                <td>{item.ProjectName}</td>
-                                <td>{item.Trainer}</td>
-                                <td>{item.Domain}</td>
-                                <td>{item.StartDate}</td>
-                                <td>{item.EndDate}</td>
-                                <td>{item.RegisteredUsers}</td>
-                                <td>{item.VacanciesLeft}</td>
-                                <td><button onClick={handleDelete}><i class="fa-solid fa-trash"></i></button></td>
+                <div className="table-responsive table-responsive-sm">
+                    <table className="table table-bordered">
+                        <thead>
+                        <tr>
+                             
+                                <th scope="col">Project Name</th>
+                                <th scope="col">Trainer</th>
+                                <th scope="col">Domain</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">RegisteredUsers</th>
+                                <th scope="col">VacanciesLeft</th>  
+                                <th scope="col"> </th>
                                 
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                           {tableData? tableData.map((item, index) => (
+                                <tr key={index}>
+                                    
+                                    <td>{item.training_name}</td>
+                                    <td>{item.trainer}</td>
+                                    <td>{item.domain}</td>
+                                    <td>{(item.startdate).split('T')[0]}</td>
+                                    <td>{new Date((item.startdate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
+                                    <td>{(item.enddate).split('T')[0]}</td>
+                                    <td>{new Date((item.enddate)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</td>
+                                    
+                                    <td>{(item.initial_seats)-(item.no_of_seats)}</td>
+                                    <td>{item.no_of_seats}</td>
+                                    <td><button onClick={() => handleDelete(item.id)}><i class="fa-solid fa-trash"></i></button></td>
+                                    
+                                </tr>
+                     )) :""}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <Modal.Footer>
 
@@ -108,23 +122,14 @@ function Training(props) {
 
             </Modal.Body>
         </Modal >
+        <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
+                Upcomimg  <i class="fa-solid fa-forward"></i>
+            </Button>
+
         </>
     );
 }
 
-// export default Training;
-export default function View_training() {
-    const [modalShow, setModalShow] = useState(false);
+export default Training;
 
-    return (
-        <>
-            <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                Upcomimg  <i class="fa-solid fa-forward"></i>
-            </Button>
-            <Training
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-            />
-        </>
-    )
-}
+

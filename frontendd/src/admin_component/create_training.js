@@ -32,7 +32,7 @@ function MyFormModal(props) {
         console.log("working", training);
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5001/api/data', training, {
+            const response = await axios.post('http://localhost:5000/users/admin', training, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -224,7 +224,7 @@ export default function Admin_training() {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-lg-4">
-                                        <div className="card">
+                                        <div className="card cards">
                                             <div className="card-header">
                                                 <h3>New Training</h3>
                                             </div>

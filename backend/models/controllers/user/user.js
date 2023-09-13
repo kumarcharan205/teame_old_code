@@ -6,7 +6,45 @@ const user = db.USER
 const admin = db.ADMIN_TRAINING
 const training = db.TRAININGS
 
+///login
+const login = async (req, res) => {
+    console.log(req.body)
+    const { email, password } = req.body
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const isValid = /@jmangroup\.com$/.test(email);
+    if (!isValid) {
+        res.send("invaild mail")
+    }
+    else if (!passwordRegex.test(password)){
+        res.send("Passoword is weak")
+    }
+    else {
+        try {
+            // const unhased=bcrypt.compare(password)
+            
+            const valid_user = await user.findOne({
+                where: {
+                    mail: req.body.email,
+                   
+                }})
+                const valid=await bcrypt.compare(password,valid_user.password)
+                if (valid_user.isadmin && valid) {
+                    res.send({data:valid_user.id,message:"Admin logged"})
+                }
+                else if (!valid_user.isadmin && valid)  {
+                    res.send({data:valid_user.id,message:"User logged"})
+                }
+                else{
+                    res.send("Unauthorized user")
+                }
+            
+        } catch (error) {
+            res.send("user not exist")
+        }
+    }
+}
 
+///sign up
 const create_user = async (req, res) => {
     console.log("hi")
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
@@ -170,42 +208,45 @@ const view = async (req, res) => {
     }
 }
 
-///login
-const login = async (req, res) => {
-    console.log(req.body)
-    const { email, password } = req.body
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
-    const isValid = /@jmangroup\.com$/.test(email);
-    if (!isValid) {
-        res.send("invaild mail")
-    }
-    else if (!passwordRegex.test(password)){
-        res.send("Passoword is weak")
-    }
-    else {
-        try {
-            // const unhased=bcrypt.compare(password)
-            
-            const valid_user = await user.findOne({
-                where: {
-                    mail: req.body.email,
-                   
-                }})
-                const valid=await bcrypt.compare(password,valid_user.password)
-                if (valid_user.isadmin && valid) {
-                    res.send({data:valid_user.id,message:"Admin logged"})
+const unregister=async(req,res)=>{
+    console.log("unregister",req.body)
+    if(req.body)
+    {
+        try{
+            const unreg=await training.destroy({
+                where:{
+                    training_id:req.body.training_id,
+                    user_id:req.body.user_id
                 }
-                else if (!valid_user.isadmin && valid)  {
-                    res.send({data:valid_user.id,message:"User logged"})
+            }).then((data)=>{
+                if(data){
+                    res.send("unregistered successfully")
                 }
                 else{
-                    res.send("Unauthorized user")
+                    res.send("Failed to unregister")
                 }
-            
-        } catch (error) {
-            res.send("user not exist")
+            }).then(
+            async()=>
+                {
+                const training_table=await admin.findOne({
+                    where:{
+                        id:req.body.training_id
+                    }
+                }).then((data)=>{
+                    console.log("nsjdbfjasdnfl;adflkamdfkandfanfajb")
+                    data.no_of_seats=data.no_of_seats+1
+                    data.save()
+                    // res.send("Updated in training_detail")
+                })
+            })
+        }
+        catch(e)
+        {
+            res.send("unable to fetch from database")
         }
     }
+
+
 }
 
 module.exports = {
@@ -214,4 +255,5 @@ module.exports = {
     register_training,
     training_details,
     view,
+    unregister
 };
