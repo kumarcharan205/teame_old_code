@@ -7,10 +7,7 @@ const create_training = async (req, res) => {
     try {
         console.log("I'm here")
         if (req.body) {
-            console.log(req.body)
-            const { training_name,trainer,skill_title,description,domain,startdate,enddate,no_of_seats} = req.body
-            console.log("req body", req.body.startDate,typeof(req.body.startDate))
-            console.log(trainer,skill_title,description,no_of_seats,domain)
+           
             await Admin.create({
                 training_name: req.body.training_name,
                 trainer:req.body.trainer,
@@ -39,7 +36,7 @@ const create_training = async (req, res) => {
 
 //Training soft deletion
 const delete_training=async (req,res)=>{
-    console.log(req.body.training_id)
+    
     try{
         if(req.body.training_id)
         {
@@ -126,16 +123,16 @@ const restore_trainings=async(req,res)=>{
 
 }
 
+///showing deleted trainings
 const deleted_trainings= async(req,res)=>{
     try {
-        console.log("sdjfnasjkdfnasdfgnalkdfnal")
         const view= await Admin.findAll({
             where:{
                 isdelete:true
             }
         }).then((data)=>{
             if(data){
-                res.send({message:"View success",data})        
+                res.send({message:"View deleted training success",data})        
             }
             else{
                 res.send({message:'Failed to view'})

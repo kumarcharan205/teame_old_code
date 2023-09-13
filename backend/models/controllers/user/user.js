@@ -20,7 +20,7 @@ const login = async (req, res) => {
     }
     else {
         try {
-            // const unhased=bcrypt.compare(password)
+           
             
             const valid_user = await user.findOne({
                 where: {
@@ -44,9 +44,10 @@ const login = async (req, res) => {
     }
 }
 
+
 ///sign up
 const create_user = async (req, res) => {
-    console.log("hi")
+   
     const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
 
     const isValid = /@jmangroup\.com$/
@@ -128,22 +129,20 @@ const register_training = async (req, res) => {
 const training_details = async (req, res) => {
     try {
         const con_id = req.params.id;
-        console.log("params", con_id)
+        
         try {
             const data = await training.findAll({
                 where: {
                     user_id: con_id
                 }
             })
-            debugger
-            console.log('data', data, typeof (data))
-
+        
             if (!data) {
                 res.send({ message: "Unavailable in db" })
             }
             else {
                 const trainingIds = data.map(trainingObj => trainingObj.training_id);
-                console.log("hello", trainingIds)
+                
                 const unregistered_trainings = await admin.findAll({
                     where: {
                         id: { [Op.not]: trainingIds },
@@ -156,8 +155,7 @@ const training_details = async (req, res) => {
         }
         catch (e) {
             res.send({ message: "error at fetching" })
-            console.log("abcd efg")
-            console.log(e)
+           
         }
 
     } catch (error) {
@@ -170,22 +168,20 @@ const training_details = async (req, res) => {
 const view = async (req, res) => {
     try {
         const con_id = req.params.id;
-        console.log("view_training_params", con_id)
+      
         try {
             const data = await training.findAll({
                 where: {
                     user_id: con_id
                 }
             })
-            debugger
-            console.log('data', data, typeof (data))
-
+            
             if (!data) {
                 res.send({ message: "Unavailable in db" })
             }
             else {
                 const trainingIds = data.map(trainingObj => trainingObj.training_id);
-                console.log("hello", trainingIds)
+                
                 const unregistered_trainings = await admin.findAll({
                     where: {
                         id: { [Op.in]: trainingIds },
@@ -198,8 +194,7 @@ const view = async (req, res) => {
         }
         catch (e) {
             res.send({ message: "error at fetching" })
-            console.log("abcd efg")
-            console.log(e)
+           
         }
 
     } catch (error) {
@@ -208,6 +203,7 @@ const view = async (req, res) => {
     }
 }
 
+//unenroll training
 const unregister=async(req,res)=>{
     console.log("unregister",req.body)
     if(req.body)
@@ -233,10 +229,10 @@ const unregister=async(req,res)=>{
                         id:req.body.training_id
                     }
                 }).then((data)=>{
-                    console.log("nsjdbfjasdnfl;adflkamdfkandfanfajb")
+                   
                     data.no_of_seats=data.no_of_seats+1
                     data.save()
-                    // res.send("Updated in training_detail")
+                    
                 })
             })
         }

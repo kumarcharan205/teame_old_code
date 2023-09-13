@@ -11,9 +11,9 @@ import View_trainings from './view_trainings';
 function UserForm() {
 
     const [searchQuery, setSearchQuery] = useState('');
-    // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    
     const [userdata, setUserdata] = useState([]);
-    // const [filteredUserData, setFilteredUserData] = useState(userdata);
+   
     const [traindata, setTraindata] = useState([])
     const [id, setId] = useState('')
     const location = useLocation()
@@ -30,8 +30,7 @@ function UserForm() {
             if (resData.length > 0) {
                 const initialUserdata = resData.map(user => ({ ...user }));
                 setUserdata(initialUserdata);
-                console.log(":jsdbfasbndjks", initialUserdata)
-                // setFilteredUserData(initialUserdata);
+              
 
             }
         } catch (e) {
@@ -47,8 +46,8 @@ function UserForm() {
             if (resData.length > 0) {
                 const initialUserdata = resData.map(user => ({ ...user }));
                 setTraindata(initialUserdata);
-                console.log(":jsdbfasbndjks", initialUserdata)
-                // setFilteredUserData(initialUserdata);
+                
+              
 
             }
         } catch (e) {
@@ -66,17 +65,13 @@ function UserForm() {
     const handleRegister = async (index) => {
         const updatedUsersData = [...userdata];
         const userData = updatedUsersData[index];
-        console.log("updatedusedata", updatedUsersData)
+      
         if (userData.no_of_seats > 0) {
             const confirmation = window.confirm('Do you want to register?');
 
             if (confirmation) {
                 userData.no_of_seats -= 1;
                 userData.register = true
-
-
-
-                console.log("Training_ID", userData.id)
                 try {
                     // POST request to your server to insert the user data into a separate table
                     const reg_train = await axios.post('http://localhost:5000/users/register', {
@@ -96,9 +91,8 @@ function UserForm() {
                         window.location.reload()
                     },2000)
                     setUserdata(updatedUsersData);
-                    console.log('User registered successfully', userData);
                 } catch (error) {
-                    console.error('Error registering user:', error);
+                    toast.error('Error registering user:', error);
                 }
             }
 
@@ -108,23 +102,17 @@ function UserForm() {
     const handleUnregister = async (index) => {
         const updatedUsersData = [...traindata]; 
         const userData = updatedUsersData[index];
-        console.log("updated unregister part usedata", updatedUsersData)
+        
 
         const confirmation = window.confirm('Do you want to register?');
 
         if (confirmation) {
-            console.log("confirmation user id ", userData.id)
+           
             try {
                 const unregister = await axios.put('http://localhost:5000/users/unregister', {
                     training_id: userData.id,
                     user_id: id
-                }).then((data) => {
-                    debugger
-                    console.log("unregister console.log", data.data)
-                }).catch((e) => {
-                    console.log("console.error from response", e)
                 })
-                
                 const updatedUsersData = [...traindata];
                 updatedUsersData[index] = userData;
                 updatedUsersData.splice(index, 1);
@@ -161,7 +149,7 @@ function UserForm() {
                                                 id='search'
                                                 type="text"
                                                 className="search form-control"
-                                                placeholder=" &#x1F50D; Search Trainings by domain"
+                                                placeholder=" &#x1F50D; Search Trainings by Training name"
                                                 value={searchQuery}
                                                 onChange={e => setSearchQuery(e.target.value)}></input>
                                         </div>

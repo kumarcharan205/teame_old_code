@@ -1,18 +1,16 @@
 // importing_necessary_packages
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+
 import './style.scss'
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
-import View_training from './view_trainings';
-import Archieve from './archieve';
-import Navbar from './adminnavbar';
+import View_training from '../viewTraining/view_trainings';
+import Archieve from '../archieveTrainings/archieve';
+import Navbar from '../navigationBar/adminnavbar';
+import { ToastContainer,toast} from 'react-toastify';
 // import Swal from 'sweetalert2';
 
 
@@ -27,10 +25,9 @@ function MyFormModal(props) {
         domain: 'Full Stack', // Default domain value
         seats: 1, // Default seats value
     });
+    const formRef=useRef()
 
     const handleSubmit = async (e) => {
-        console.log("abcd check", startDate, endDate)
-        console.log("working", training);
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/users/admin', training, {
@@ -38,22 +35,27 @@ function MyFormModal(props) {
                     'Content-Type': 'application/json',
                 },
             });
-
-            if (response.status === 200) {
-                console.log('Scheduled training:', response.data);
-                // Swal.fire('Training Created Successfully');
+            if (response.data.message==='response success') {
+                toast.success("Training created")
+                setTimeout(() => {
+                    formRef.current.reset()
+                    window.location.reload()    
+                }, 1500);
+                
             } else {
-                console.error('Set training failed');
+                toast.error('Set training failed');
+                formRef.current.reset()
             }
         } catch (error) {
-            console.error('Registering error:', error);
+            toast.error('Registering error:', error);
+            formRef.current.reset()
         }
     };
 
     return (
         <>
 
-
+<ToastContainer/>
             <Modal
                 {...props}
                 size="lg"
@@ -72,7 +74,7 @@ function MyFormModal(props) {
                             <div className="row justify-content-md-center">
                                 <div className="col-xs" >
 
-                                    <form onSubmit={handleSubmit}>
+                                    <form onSubmit={handleSubmit} ref={formRef}>
 
                                         <div className="form-group">
                                             <label for="trainingName">Training Name</label>
@@ -80,7 +82,7 @@ function MyFormModal(props) {
                                                 type="text"
                                                 id="trainingName"
                                                 placeholder="Training Name"
-                                                value={training.training_name}
+                                              
                                                 onChange={(e) => setTraining({ ...training, training_name: e.target.value })}
                                                 required
                                             />
@@ -91,7 +93,7 @@ function MyFormModal(props) {
                                                 type="text"
                                                 id="trainer"
                                                 placeholder="Trainer"
-                                                value={training.trainer}
+                                                
                                                 onChange={(e) => setTraining({ ...training, trainer: e.target.value })}
                                                 required
                                             />
@@ -102,7 +104,7 @@ function MyFormModal(props) {
                                                 type="text"
                                                 id="skillTitle"
                                                 placeholder="Title"
-                                                value={training.skill}
+                                               
                                                 onChange={(e) => setTraining({ ...training, skill: e.target.value })}
                                                 required
                                             />
@@ -112,7 +114,7 @@ function MyFormModal(props) {
                                             <textarea
                                                 id="description"
                                                 placeholder="Leave a comment here"
-                                                lue={training.description}
+                                                
                                                 onChange={(e) => setTraining({ ...training, description: e.target.value })}
                                                 
                                             ></textarea>
@@ -121,7 +123,7 @@ function MyFormModal(props) {
                                             <label for="domain">Domain</label>
                                             <select
                                                 id="domain"
-                                                value={training.domain}
+                                               
                                                 onChange={(e) => setTraining({ ...training, domain: e.target.value })}
                                                 required
                                             >
@@ -160,13 +162,7 @@ function MyFormModal(props) {
                                                 minDate={new Date()}
                                                 required
                                             />
-                                            {/* <input
-                                                type="date"
-                                                id="endDate"
-                                                min="<?= date('Y-m-d') ?>"
-                                                value={training.endDate}
-                                                onChange={(e) => setTraining({ ...training, endDate: e.target.value })}
-                                            /> */}
+                                            
                                         </div>
                                         <div className="form-group">
                                             <label for="seats">No of Seats</label>
@@ -176,7 +172,7 @@ function MyFormModal(props) {
                                                 placeholder="Seats"
                                                 min="1"
                                                 max="99"
-                                                value={training.seats}
+                                               
                                                 onChange={(e) => setTraining({ ...training, seats: e.target.value })}
                                                 required
                                             />

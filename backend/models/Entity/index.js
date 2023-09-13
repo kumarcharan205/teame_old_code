@@ -1,3 +1,6 @@
+// const dotenv=require('dotenv')
+// dotenv.config({path:"./config.env"})
+// console.log(process.env.USER)
 const { Sequelize, DataTypes } = require("sequelize");
 const db_config = require("../../config/db-config.js")
 const sql = require("mysql2/promise")
