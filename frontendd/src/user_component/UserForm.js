@@ -9,29 +9,39 @@ import View_trainings from './view_trainings';
 
 
 function UserForm() {
+
     const [searchQuery, setSearchQuery] = useState('');
+    
     const [userdata, setUserdata] = useState([]);
+    
     const [traindata, setTraindata] = useState([])
+    
     const [id, setId] = useState('')
+
+    const [updateduser,Setupdateduser]=useState()
+
+    const [updatedtraininguser,Setupdatedtraininguser]=useState()
+    
     const location = useLocation()
+    
     const { user_id } = location.state
 
     const getUserdata = async () => {
+    
         try {
 
             setId(user_id)
             const req = await fetch(`http://localhost:5000/users/get/${user_id}`);
             const resData = await req.json();
             if (resData.length > 0) {
-                const initialUserdata = resData.map(user => ({ ...user }));
-                setUserdata(initialUserdata);
-              
-
+                // const initialUserdata = resData.map(user => ({ ...user }));
+                setUserdata(resData);
             }
         } catch (e) {
             console.log(e);
         }
     }
+
     const getregisteredUserdata = async () => {
         try {
 
@@ -40,10 +50,8 @@ function UserForm() {
             const resData = await req.json();
             if (resData.length > 0) {
                 const initialUserdata = resData.map(user => ({ ...user }));
+                console.log("already registered trainings",resData)
                 setTraindata(initialUserdata);
-                
-              
-
             }
         } catch (e) {
             console.log(e);
@@ -54,7 +62,7 @@ function UserForm() {
         getUserdata();
         getregisteredUserdata();
         
-    }, []);
+    }, [updatedtraininguser,updateduser]);
   
     const handleRegister = async (index) => {
         const updatedUsersData = [...userdata];
@@ -85,6 +93,7 @@ function UserForm() {
                     //     window.location.reload()
                     // },2000)
                     setUserdata(updatedUsersData);
+                    Setupdateduser(userdata)
                 } catch (error) {
                     toast.error('Error registering user:', error);
                 }
@@ -112,18 +121,17 @@ function UserForm() {
                 updatedUsersData.splice(index, 1);
                 toast.info("Training unregistered successfully")
                 setTraindata(updatedUsersData)
-                // setTimeout(()=>{
-                //     window.location.reload()
-                // },1500)
+                Setupdatedtraininguser(traindata)
             } catch (error) {
                 console.log("error from db")
             }
         }
     }
-    const reload=useMemo(()=>{
-        debugger;
-      setTraindata(traindata)
-    },[traindata,userdata])
+    // const reload=useMemo(()=>{
+    //     debugger;
+    //   setTraindata(traindata)
+    //   console.log("registered_traindata",traindata,"upcoming_training_data",userdata)
+    // },[traindata,userdata])
     
     return (
         <div>

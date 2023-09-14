@@ -12,7 +12,7 @@ import UserForm from './user_component/UserForm';
 
 
 function App() {
-  debugger
+
   const userAuthenticated = Userauth();
 
 
