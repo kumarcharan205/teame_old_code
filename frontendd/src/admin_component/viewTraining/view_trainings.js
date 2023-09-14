@@ -22,7 +22,9 @@ function Training() {
                 const updatedTableData = tableData.filter(item => item.id !== itemId);
                 setTableData(updatedTableData);
                 toast.success("Training deleted succesfully")
-               
+               setTimeout(()=>{
+                window.location.reload()
+               },1500)
             } else {
                 toast.error('Error deleting item');
             }

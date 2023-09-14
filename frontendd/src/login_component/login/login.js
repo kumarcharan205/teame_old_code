@@ -1,7 +1,8 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './login.scss';
+import Cookies from 'js-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 
 function Login() {
@@ -14,10 +15,14 @@ function Login() {
     e.preventDefault();
     debugger;
     const isValid = /@jmangroup\.com$/.test(email);
+
     if (!isValid) {
       console.log('invalid')
       toast.error("Enter the organisation mail")
       formref.current.reset()
+    }
+    else if (email.trim() === '' || password.trim() === '') {
+      toast.error('Please fill in all fields.');
     }
     else {
       if (email.trim() !== '' && password.trim() !== '') {
@@ -27,32 +32,36 @@ function Login() {
             password,
           });
           console.log("response from backend", response.data.message);
+          const token = response.data.token;
           if (response.data.message === 'User logged') {
+            Cookies.set('jwtToken', token, { expires: 7 });
+           
             toast.success("Login successful")
             setTimeout(() => {
-              navigate('/userform',{state:{user_id:response.data.data}})
-            }, 3000)
+              navigate('/userform', { state: { user_id: response.data.data } })
+            }, 2000)
           }
           else if (response.data.message === 'Admin logged') {
             console.log("admin authenticate")
+            Cookies.set('jwtToken', token, { expires: 7 });
             toast.success(" Admin Login successful")
             setTimeout(() => {
               navigate('/admin_training')
-            }, 3000)
+            }, 2000)
           }
-          else if(response.data ==='invaild mail')
-          {
+          else if (response.data === 'invaild mail') {
             toast.error("Enter the organisation mail")
             formref.current.reset()
           }
-          else if(response.data==='Passoword is weak')
-          {
-            toast.error("Password must contain atleast 1 uppercase,1 special character,1 numeric character and min 8 characters")
+          else if (response.data === 'Passoword is weak') {
+            // toast.error("Wrong credentials")
+            formref.current.reset()
           }
         }
 
         catch (error) {
-          console.error('Sign-in error:', error);
+          toast.error('Invalid credentials');
+
         }
 
       }
@@ -63,14 +72,14 @@ function Login() {
     <div className="login-container">
       <div className="login-left">
         <ToastContainer />
-        <img src="login_bg.png" alt="Login" className="imagefirst"/>
-        <img src="Login-logo-signup.92ae013a.png" className="pngimg"/>
+        <img src="login_bg.png" alt="Login" className="imagefirst" />
+        <img src="Login-logo-signup.92ae013a.png" className="pngimg" />
       </div>
       <div className="login-right">
         <form onSubmit={validationReg}>
-        <h1 className="heading">Welcome Back :)</h1>
+          <h1 className="heading">Welcome Back :)</h1>
           <div className="login-input-container">
-            <i className="fa-regular fa-envelope"></i>  
+            <i className="fa-regular fa-envelope"></i>
             <input
               type="email"
               onChange={(e) => setEmail(e.target.value)}

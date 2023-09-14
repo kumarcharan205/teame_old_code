@@ -105,6 +105,15 @@ li {
 
 .logOut {
   background: none !important;
+  border: none !important;
+  width: 100% !important;
+  color: white !important;
+  margin-bottom: 5% !important;
+}
+
+.reqfield{
+  color: rgb(139, 9, 9);
+  font-weight: bolder;
 }
 
 // .logout {
@@ -136,9 +145,14 @@ li {
   color: white;
   border: none !important;
   width: 100%;
+  margin-top: 5%;
 }
 
-
+.schedule{
+  width: 100%;
+  background-color: #ff6196 !important;
+  border: none !important;
+}
 
 /* Admin page all styles */
 
@@ -178,6 +192,8 @@ label {
   font-weight: bold;
 }
 
+
+
 /* Style form inputs and textarea */
 input[type="text"],
 input[type="date"],
@@ -189,6 +205,11 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+
+.end{
+  display: flex;
+  justify-content: space-between;
 }
 
 /* 3D cards  */

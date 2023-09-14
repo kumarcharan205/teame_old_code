@@ -7,7 +7,6 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 function History() {
-    // debugger
     const [tableData, setTableData] = useState();
     const [modalShow, setModalShow] = useState(false);
     const handleClose = () => setModalShow(false);
@@ -17,13 +16,16 @@ function History() {
         const id = itemId
         try {
             const response = await axios.post(`http://localhost:5000/users/restore`, { id });
-            
+
             if (response.data.message === 'Training restored successfully') {
 
                 const updatedTableData = tableData.filter(item => item.id !== itemId);
                 setTableData(updatedTableData);
                 toast.success("Training restored succesfully")
-                
+                setTimeout(()=>{
+                    window.location.reload()
+                },1500)
+
             } else {
                 toast.error('Error deleting item');
             }
@@ -31,16 +33,12 @@ function History() {
             console.log('Error deleting item:', error);
         }
     };
-
     const fetchData = async () => {
         try {
-
             const response = await axios.get('http://localhost:5000/users/deleted_trainings');
-
-            
             if (response.status === 200) {
                 setTableData(response.data.data);
-                
+
             } else {
                 console.log('Error response:');
             }
@@ -70,7 +68,7 @@ function History() {
                 </Modal.Header>
 
                 <Modal.Body>
-                
+
                     <div className="main-user">
                         <div className="table-responsive table-responsive-sm">
                             <table className="table table-bordered">
@@ -91,7 +89,7 @@ function History() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+
                                     {tableData ? tableData.map((item, index) => (
                                         <tr key={index}>
                                             <td>{item.training_name}</td>
@@ -104,7 +102,7 @@ function History() {
 
                                             <td>{(item.initial_seats) - (item.no_of_seats)}</td>
                                             <td>{item.no_of_seats}</td>
-                                            <td><button onClick={() => handlerestore(item.id)}><i class="fa-solid fa-trash"></i></button></td>
+                                            <td><button onClick={() => handlerestore(item.id)}><i class="fa-solid fa-trash del"></i></button></td>
 
                                         </tr>
                                     )) : ""}
@@ -121,7 +119,7 @@ function History() {
                 </Modal.Body>
             </Modal >
             <Button className='schedule' variant="primary" onClick={() => setModalShow(true)}>
-                Upcomimg  <i class="fa-solid fa-forward"></i>
+                Archieved  <i class="fa-solid fa-clock-rotate-left"></i>
             </Button>
 
         </>

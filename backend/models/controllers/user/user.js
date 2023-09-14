@@ -1,6 +1,9 @@
 const { Op } = require("sequelize")
 const db = require("../../Entity")
 const bcrypt=require("bcrypt")
+const jwt = require('jsonwebtoken');
+const secretkey='jman';
+
 
 const user = db.USER
 const admin = db.ADMIN_TRAINING
@@ -20,8 +23,7 @@ const login = async (req, res) => {
     }
     else {
         try {
-           
-            
+        
             const valid_user = await user.findOne({
                 where: {
                     mail: req.body.email,
@@ -29,10 +31,16 @@ const login = async (req, res) => {
                 }})
                 const valid=await bcrypt.compare(password,valid_user.password)
                 if (valid_user.isadmin && valid) {
-                    res.send({data:valid_user.id,message:"Admin logged"})
+                    const token = jwt.sign({ userId: valid_user.id, email: valid_user.mail}, secretkey, {
+                        expiresIn: '1h',
+                      });
+                    res.send({data:valid_user.id,message:"Admin logged",token})
                 }
                 else if (!valid_user.isadmin && valid)  {
-                    res.send({data:valid_user.id,message:"User logged"})
+                    const token = jwt.sign({ userId: valid_user.id, email: valid_user.mail}, secretkey, {
+                        expiresIn: '1h',
+                      });
+                    res.send({data:valid_user.id,message:"User logged",token})
                 }
                 else{
                     res.send("Unauthorized user")

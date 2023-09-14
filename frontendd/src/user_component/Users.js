@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import './style.css';
+import './style.scss';
 
 export default function Users({usersData,searchQuery,handleRegister}) {
 

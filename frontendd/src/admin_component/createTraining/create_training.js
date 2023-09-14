@@ -77,7 +77,7 @@ function MyFormModal(props) {
                                     <form onSubmit={handleSubmit} ref={formRef}>
 
                                         <div className="form-group">
-                                            <label for="trainingName">Training Name</label>
+                                            <label for="trainingName">Training Name <span className='reqfield'> * </span></label>
                                             <input
                                                 type="text"
                                                 id="trainingName"
@@ -88,7 +88,7 @@ function MyFormModal(props) {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label for="trainer">Trainer</label>
+                                            <label for="trainer">Trainer <span className='reqfield'> * </span></label>
                                             <input
                                                 type="text"
                                                 id="trainer"
@@ -99,7 +99,7 @@ function MyFormModal(props) {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label for="skillTitle">Skill Title</label>
+                                            <label for="skillTitle">Skill Title <span className='reqfield'> * </span></label>
                                             <input
                                                 type="text"
                                                 id="skillTitle"
@@ -120,7 +120,7 @@ function MyFormModal(props) {
                                             ></textarea>
                                         </div>
                                         <div className="form-group">
-                                            <label for="domain">Domain</label>
+                                            <label for="domain">Domain <span className='reqfield'> * </span></label>
                                             <select
                                                 id="domain"
                                                
@@ -133,7 +133,7 @@ function MyFormModal(props) {
                                             </select>
                                         </div>
                                         <div className="form-group">
-                                            <label for="startDate">Start Date</label>
+                                            <label for="startDate">Start Date <span className='reqfield'> * </span></label>
                                             <DatePicker
                                                 selected={startDate}
                                                 onChange={(date) => {
@@ -149,7 +149,7 @@ function MyFormModal(props) {
 
                                         </div>
                                         <div className="form-group">
-                                            <label for="endDate">End Date</label>
+                                            <label for="endDate">End Date <span className='reqfield'> * </span></label>
                                             <DatePicker
                                                 selected={endDate}
                                                 onChange={(date) => {
@@ -165,7 +165,7 @@ function MyFormModal(props) {
                                             
                                         </div>
                                         <div className="form-group">
-                                            <label for="seats">No of Seats</label>
+                                            <label for="seats">No of Seats <span className='reqfield'> * </span></label>
                                             <input
                                                 type="number"
                                                 id="seats"
@@ -177,12 +177,14 @@ function MyFormModal(props) {
                                                 required
                                             />
                                         </div>
+                                        <div className='end'> 
                                         <Button type="submit" className="button_" name="Submit">
                                             Submit
                                         </Button>
                                         <Button className="close" onClick={props.onHide}>
                                             Close
                                         </Button>
+                                        </div>
 
                                     </form>
                                 </div>

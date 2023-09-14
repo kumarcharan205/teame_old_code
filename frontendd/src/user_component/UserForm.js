@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useMemo } from 'react'
 import Users from './Users';
-import './style.css'
-import { useLocation } from 'react-router-dom';
+import './style.scss'
+import { Navigate, useLocation } from 'react-router-dom';
 import Navbar from '../user_component/usernavbar';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,17 +9,12 @@ import View_trainings from './view_trainings';
 
 
 function UserForm() {
-
     const [searchQuery, setSearchQuery] = useState('');
-    
     const [userdata, setUserdata] = useState([]);
-   
     const [traindata, setTraindata] = useState([])
     const [id, setId] = useState('')
     const location = useLocation()
     const { user_id } = location.state
-    console.log(user_id, "using location ")
-
 
     const getUserdata = async () => {
         try {
@@ -55,13 +50,12 @@ function UserForm() {
         }
     }
 
-
-
     useEffect(() => {
         getUserdata();
         getregisteredUserdata();
+        
     }, []);
-
+  
     const handleRegister = async (index) => {
         const updatedUsersData = [...userdata];
         const userData = updatedUsersData[index];
@@ -87,9 +81,9 @@ function UserForm() {
                     updatedUsersData[index] = userData;
                     updatedUsersData.splice(index, 1);
                     toast.success("Registeration successful")
-                    setTimeout(()=>{
-                        window.location.reload()
-                    },2000)
+                    // setTimeout(()=>{
+                    //     window.location.reload()
+                    // },2000)
                     setUserdata(updatedUsersData);
                 } catch (error) {
                     toast.error('Error registering user:', error);
@@ -118,15 +112,19 @@ function UserForm() {
                 updatedUsersData.splice(index, 1);
                 toast.info("Training unregistered successfully")
                 setTraindata(updatedUsersData)
-                setTimeout(()=>{
-                    window.location.reload()
-                },1500)
+                // setTimeout(()=>{
+                //     window.location.reload()
+                // },1500)
             } catch (error) {
                 console.log("error from db")
             }
         }
     }
-
+    const reload=useMemo(()=>{
+        debugger;
+      setTraindata(traindata)
+    },[traindata,userdata])
+    
     return (
         <div>
             <div className="for w-100">

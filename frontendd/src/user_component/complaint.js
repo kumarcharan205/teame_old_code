@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './style.css'
+import './style.scss'
 import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import emailjs from 'emailjs-com';
@@ -34,20 +34,20 @@ export default function Complaint() {
     return (
         <>
             <button className="complaint" onClick={handleShow}>
-                Feedback <i class="fa-regular fa-thumbs-up"></i>
+                Request <i class="fa-regular fa-thumbs-up"></i>
             </button>
             <Modal show={showModal} onHide={handleClose} className="complaint">
                 <form ref={form} onSubmit={sendEmail}>
                         <div className="column">
-                            <label>Name</label>
+                            <label>Name <span className='reqfield'> * </span></label>
                             <input className="complaintname" type="text" name="user_name" required/>
                         </div>
                         <div className="column">
-                            <label>Email</label>
+                            <label>Email <span className='reqfield'> * </span></label>
                             <input className="complaintemail" type="email" name="user_email" required/>
                         </div>
                     <div className="row">
-                        <label>Message</label>
+                        <label>Message <span className='reqfield'> * </span></label>
                         <textarea className="complaintmessage" name="message" required/>
                     </div>
                     <div className="row">
